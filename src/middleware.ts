@@ -15,17 +15,10 @@ const roleBasedRoutes = {
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  console.log(pathname);
-
   const user = await getCurrentUser();
 
-  console.log(user);
-
   if (!user) {
-    console.log("1st");
     if (AuthRoutes.includes(pathname)) {
-      console.log("2nd");
-
       return NextResponse.next();
     } else {
       return NextResponse.redirect(
@@ -33,7 +26,6 @@ export async function middleware(request: NextRequest) {
       );
     }
   }
-
   if (user?.role && roleBasedRoutes[user?.role as Role]) {
     const routes = roleBasedRoutes[user?.role as Role];
 

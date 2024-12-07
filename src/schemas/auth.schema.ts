@@ -1,14 +1,37 @@
 import { z } from "zod";
 
-export const registrationValidationSchema = z.object({
+export const customerSignupValidationSchema = z.object({
   name: z.string().min(1, "Name is required").max(100, "Name too long"),
-  email: z.string().min(1, "Email is required").email("Invalid email format"),
-  password: z
-    .string()
-    .min(6, "Password must be at least 6 characters long")
-    .max(100),
-  profilePicture: z.string().optional(),
-  bio: z.string().min(1, "Bio is required").max(100, "Bio too long"),
+  email: z.string().trim().email("Please enter a valid email"),
+  phone: z.string().optional(),
+  address: z.string().optional(),
+  password: z.string().min(6, "Password must be at least 6 characters long"),
+});
+
+export const vendorSignupValidationSchema = z.object({
+  email: z.string().trim().email("Please enter a valid email"),
+  phone: z.string({
+    required_error: "Contact Number is required!",
+  }),
+  shopName: z.string({
+    required_error: "Name is required!",
+  }),
+  shopDescription: z.string({
+    required_error: "Description is required!",
+  }),
+  address: z.string({
+    required_error: "Address is required!",
+  }),
+  password: z.string().min(6, "Password must be at least 6 characters long"),
+});
+
+export const adminSignupValidationSchema = z.object({
+  name: z.string().min(1, "Name is required").max(100, "Name too long"),
+  email: z.string().trim().email("Please enter a valid email"),
+  phone: z.string({
+    required_error: "Contact Number is required!",
+  }),
+  password: z.string().min(6, "Password must be at least 6 characters long"),
 });
 
 export const loginValidationSchema = z.object({

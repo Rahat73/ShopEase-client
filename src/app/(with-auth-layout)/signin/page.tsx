@@ -16,7 +16,6 @@ import { useUser } from "@/src/context/user.provider";
 
 const SignIn = () => {
   const [showPass, setShowPass] = useState(false);
-  const [loginSuccess, setLoginSuccess] = useState(false);
 
   const searchParams = useSearchParams();
   const redirect = searchParams.get("redirect");
@@ -28,18 +27,13 @@ const SignIn = () => {
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     const res = await handleUserLogin(data);
 
-    if (!res.success) {
-      setLoginSuccess(false);
-
-      return;
+    if (res.success) {
+      if (redirect) {
+        router.push(redirect);
+      } else {
+        router.push("/");
+      }
     }
-
-    if (redirect) {
-      router.push(redirect);
-    } else {
-      router.push("/");
-    }
-    setLoginSuccess(true);
     userLoading(true);
   };
 
@@ -82,8 +76,8 @@ const SignIn = () => {
         </AppForm>
         <div className="text-center">
           Don&lsquo;t have account ?{" "}
-          <Link href={"/register"} className="text-primary-500">
-            Register
+          <Link href={"/signup"} className="text-primary-500">
+            Sign Up
           </Link>
         </div>
         <div className="text-center my-1">

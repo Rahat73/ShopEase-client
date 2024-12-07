@@ -13,6 +13,8 @@ import {
 import NextLink from "next/link";
 import Image from "next/image";
 
+import AuthBtn from "./auth-btn";
+
 import logo from "@/src/assets/images/logo.png";
 import { SearchIcon } from "@/src/components/icons";
 import { ThemeSwitch } from "@/src/components/theme-switch";
@@ -89,7 +91,9 @@ export const Navbar = () => {
           </Link> */}
             <ThemeSwitch />
           </NavbarItem>
-          <NavbarItem className="hidden md:flex">Login</NavbarItem>
+          <NavbarItem className="hidden md:flex">
+            <AuthBtn />
+          </NavbarItem>
         </NavbarContent>
 
         <NavbarContent className="sm:hidden basis-1 pl-4" justify="end">

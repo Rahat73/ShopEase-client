@@ -12,7 +12,8 @@ import {
 export const useUserRegistration = () => {
   return useMutation<any, Error, FieldValues>({
     mutationKey: ["USER_REGISTRATION"],
-    mutationFn: async (userData) => await registerUser(userData),
+    mutationFn: async ({ userData, selectedUser }) =>
+      await registerUser(userData, selectedUser),
     onSuccess: (data) => {
       if (data?.success) {
         toast.success(data.message);

@@ -6,18 +6,24 @@ import { FieldValues } from "react-hook-form";
 
 import axiosInstance from "../lib/axios-instance";
 
-export const registerUser = async (userData: FieldValues) => {
+export const registerUser = async (
+  userData: FieldValues,
+  selectedUser: string
+) => {
   try {
-    const { data } = await axiosInstance.post("/auth/signup", userData);
+    const { data } = await axiosInstance.post(
+      `/user/create-${selectedUser}`,
+      userData
+    );
 
     if (data.success) {
-      cookies().set("accessToken", data?.accessToken);
+      cookies().set("accessToken", data?.data?.accessToken);
       // cookies().set("refreshToken", data?.data?.refreshToken);
     }
 
     return data;
   } catch (error: any) {
-    return error.response.data;
+    return error?.response?.data;
   }
 };
 
