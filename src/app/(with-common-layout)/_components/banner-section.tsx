@@ -45,10 +45,10 @@ const BannerSection = () => {
       </div>
       <div className="absolute bottom-4 right-4">
         <button className="embla__prev" onClick={scrollPrev}>
-          <IoIosArrowDropleftCircle className="text-5xl text-slate-500" />
+          <IoIosArrowDropleftCircle className="text-3xl md:text-5xl text-slate-500" />
         </button>
         <button className="embla__next" onClick={scrollNext}>
-          <IoIosArrowDroprightCircle className="text-5xl text-slate-500" />
+          <IoIosArrowDroprightCircle className="text-3xl md:text-5xl text-slate-500" />
         </button>
       </div>
     </div>

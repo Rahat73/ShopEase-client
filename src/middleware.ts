@@ -42,6 +42,7 @@ export const config = {
   matcher: [
     "/signin",
     "/signup",
+    "/forgot-password",
     "/admin",
     "/admin/:page*",
     "/vendor",

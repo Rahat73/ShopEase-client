@@ -46,6 +46,14 @@ export const forgotPasswordValidationSchema = z.object({
   email: z.string().trim().email("Please enter a valid email"),
 });
 
+export const resetPasswordValidationSchema = z.object({
+  password: z
+    .string({
+      required_error: "User password is required!",
+    })
+    .min(6, "Password must be at least 6 characters long"),
+});
+
 export const changePasswordValidationSchema = z.object({
   newPassword: z
     .string({

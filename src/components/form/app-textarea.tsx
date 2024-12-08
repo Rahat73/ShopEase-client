@@ -1,6 +1,7 @@
-import { IInput } from "@/src/types";
 import { Textarea } from "@nextui-org/input";
 import { useFormContext } from "react-hook-form";
+
+import { IInput } from "@/src/types";
 
 export default function AppTextarea({
   name,
@@ -20,7 +21,7 @@ export default function AppTextarea({
       errorMessage={errors[name] ? (errors[name]?.message as string) : ""}
       isInvalid={!!errors[name]}
       label={label}
-      minRows={6}
+      minRows={4}
       variant={variant}
       placeholder={placeholder}
       defaultValue={defaultValue}
