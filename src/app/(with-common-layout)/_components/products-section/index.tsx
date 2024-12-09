@@ -4,7 +4,7 @@ import { Divider } from "@nextui-org/react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useEffect, useState } from "react";
 
-import ProductCard from "./product-card";
+import ProductCard from "../../../../components/ui/product-card";
 
 import { GET_ALL_PRODUCTS } from "@/src/api-endpoints/product.api";
 import { useFetchData } from "@/src/hooks/fetch.hook";
@@ -14,18 +14,19 @@ const ProductsSection = () => {
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   const [products, setProducts] = useState<Product[]>([]);
+  const limit = 10;
 
   const { data = [], meta } = useFetchData(GET_ALL_PRODUCTS, {
     page,
-    limit: 10,
+    limit,
   });
 
   useEffect(() => {
-    if (data.length > 10) {
+    if (data.length > 0) {
       setProducts((prev) => [...prev, ...data]);
     }
     if (meta?.total) {
-      if (page * 1 < meta.total) {
+      if (page * limit < meta.total) {
         setHasMore(true);
       } else {
         setHasMore(false);
@@ -59,7 +60,7 @@ const ProductsSection = () => {
         }
         scrollThreshold={0.95}
       >
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
           {products.map((item: Product) => (
             <ProductCard key={item.id} product={item} />
           ))}

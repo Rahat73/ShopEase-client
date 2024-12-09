@@ -10,6 +10,7 @@ const ProductCard = ({ product }: { product: Product }) => {
       isPressable
       shadow="sm"
       className="group"
+      radius="sm"
       onPress={() => console.log(product.images?.[0])}
     >
       <CardBody className="overflow-visible p-0">
@@ -17,7 +18,7 @@ const ProductCard = ({ product }: { product: Product }) => {
           isBlurred
           alt={product.name}
           className="w-full object-cover h-[180px] group-hover:scale-110 transition-all duration-300"
-          radius="lg"
+          radius="sm"
           shadow="sm"
           src={product.images?.[0] || noImg}
           width="100%"

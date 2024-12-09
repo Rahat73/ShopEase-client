@@ -46,6 +46,7 @@ const FlashSellSection = () => {
             isPressable
             shadow="sm"
             className="group"
+            radius="sm"
             onPress={() => console.log(item.images?.[0])}
           >
             <CardBody className="overflow-visible p-0">
@@ -53,7 +54,7 @@ const FlashSellSection = () => {
                 isBlurred
                 alt={item.name}
                 className="w-full object-cover h-[150px] group-hover:scale-110 transition-all duration-300"
-                radius="lg"
+                radius="sm"
                 shadow="sm"
                 src={item.images?.[0] || noImg}
                 width="100%"
