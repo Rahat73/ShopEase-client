@@ -13,6 +13,7 @@ export const useFetchData = (
 
   return {
     data: data?.data,
+    meta: data?.meta,
     isLoading,
     refetch,
     isSuccess,
