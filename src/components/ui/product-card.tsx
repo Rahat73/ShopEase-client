@@ -1,9 +1,12 @@
 import { Card, CardBody, CardFooter, Image } from "@nextui-org/react";
+import { useRouter } from "next/navigation";
 
 import { Product } from "@/src/types";
 import { noImg } from "@/src/constants";
 
 const ProductCard = ({ product }: { product: Product }) => {
+  const router = useRouter();
+
   return (
     <Card
       key={product.id}
@@ -11,7 +14,7 @@ const ProductCard = ({ product }: { product: Product }) => {
       shadow="sm"
       className="group"
       radius="sm"
-      onPress={() => console.log(product.images?.[0])}
+      onPress={() => router.push(`/products/${product.id}`)}
     >
       <CardBody className="overflow-visible p-0">
         <Image

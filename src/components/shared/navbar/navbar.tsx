@@ -1,5 +1,3 @@
-import { Input } from "@nextui-org/input";
-import { Kbd } from "@nextui-org/kbd";
 import { Link } from "@nextui-org/link";
 import {
   NavbarBrand,
@@ -14,34 +12,13 @@ import NextLink from "next/link";
 import Image from "next/image";
 
 import AuthBtn from "./auth-btn";
+import SearchBar from "./search-bar";
 
 import logo from "@/src/assets/images/logo.png";
-import { SearchIcon } from "@/src/components/icons";
 import { ThemeSwitch } from "@/src/components/theme-switch";
 import { siteConfig } from "@/src/config/site";
 
 export const Navbar = () => {
-  const searchInput = (
-    <Input
-      aria-label="Search"
-      classNames={{
-        inputWrapper: "bg-default-100",
-        input: "text-sm",
-      }}
-      endContent={
-        <Kbd className="hidden lg:inline-block" keys={["command"]}>
-          K
-        </Kbd>
-      }
-      labelPlacement="outside"
-      placeholder="Search..."
-      startContent={
-        <SearchIcon className="text-base text-default-400 pointer-events-none flex-shrink-0" />
-      }
-      type="search"
-    />
-  );
-
   return (
     <div className="py-3">
       <NextUINavbar maxWidth="xl" position="sticky">
@@ -73,7 +50,9 @@ export const Navbar = () => {
           </ul>
         </NavbarContent>
 
-        <NavbarItem className="hidden sm:flex w-6/12">{searchInput}</NavbarItem>
+        <NavbarItem className="hidden sm:flex w-6/12">
+          <SearchBar />
+        </NavbarItem>
 
         <NavbarContent
           className="hidden sm:flex basis-1/5 sm:basis-full"
@@ -126,7 +105,9 @@ export const Navbar = () => {
           </div>
         </NavbarMenu>
       </NextUINavbar>
-      <div className="sm:hidden w-10/12 mx-auto">{searchInput}</div>
+      <div className="sm:hidden w-10/12 mx-auto">
+        <SearchBar />
+      </div>
     </div>
   );
 };

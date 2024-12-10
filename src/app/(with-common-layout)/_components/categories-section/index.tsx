@@ -26,7 +26,7 @@ const CategoriesSection = () => {
             className="h-48"
             onPress={() => {
               router.push(
-                `/all-products?categoryId=${item.id}&categoryName=${item.name}`
+                `/products?categoryId=${item.id}&categoryName=${item.name}`
               );
             }}
           >
