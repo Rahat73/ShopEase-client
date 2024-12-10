@@ -3,7 +3,7 @@
 import { Autocomplete, AutocompleteItem } from "@nextui-org/react";
 import { useEffect, useState } from "react";
 import { Button } from "@nextui-org/button";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { MdOutlineClear } from "react-icons/md";
 
 import { SearchIcon } from "../../icons";
@@ -15,6 +15,9 @@ import { Product } from "@/src/types";
 const SearchBar = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
+
+  const searchParams = useSearchParams();
+  const searchTermUrl = searchParams.get("searchTerm");
 
   const router = useRouter();
 
@@ -50,10 +53,12 @@ const SearchBar = () => {
         }
         endContent={
           <>
-            <MdOutlineClear
-              className="rounded-full mr-4 cursor-pointer"
-              onClick={() => router.push("/products")}
-            />
+            {searchTermUrl && (
+              <MdOutlineClear
+                className="rounded-full mr-4 cursor-pointer"
+                onClick={() => router.push("/products")}
+              />
+            )}
 
             <Button
               size="sm"
