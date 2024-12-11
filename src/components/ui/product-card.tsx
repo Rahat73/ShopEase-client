@@ -3,9 +3,27 @@ import { useRouter } from "next/navigation";
 
 import { Product } from "@/src/types";
 import { noImg } from "@/src/constants";
+import { usePostData } from "@/src/hooks/post.hook";
+import { GET_ALL_PRODUCTS } from "@/src/api-endpoints/product.api";
+import { ADD_RECENT_PRODUCT } from "@/src/api-endpoints/recent-product.api";
 
 const ProductCard = ({ product }: { product: Product }) => {
   const router = useRouter();
+
+  const { mutate } = usePostData({
+    invalidateQueries: [GET_ALL_PRODUCTS],
+    doNotShowNotification: true,
+  });
+
+  const handleClick = () => {
+    router.push(`/products/${product.id}`);
+    mutate({
+      url: ADD_RECENT_PRODUCT,
+      postData: {
+        productId: product.id,
+      },
+    });
+  };
 
   return (
     <Card
@@ -14,7 +32,7 @@ const ProductCard = ({ product }: { product: Product }) => {
       shadow="sm"
       className="group"
       radius="sm"
-      onPress={() => router.push(`/products/${product.id}`)}
+      onPress={handleClick}
     >
       <CardBody className="overflow-visible p-0">
         <Image
