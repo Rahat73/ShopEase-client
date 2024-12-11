@@ -3,7 +3,7 @@ import { useRouter } from "next/navigation";
 
 import { Product } from "@/src/types";
 import { noImg } from "@/src/constants";
-import { usePostData } from "@/src/hooks/post.hook";
+import { usePostData } from "@/src/hooks/mutation.hook";
 import { GET_ALL_PRODUCTS } from "@/src/api-endpoints/product.api";
 import { ADD_RECENT_PRODUCT } from "@/src/api-endpoints/recent-product.api";
 
