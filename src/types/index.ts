@@ -112,6 +112,7 @@ export type Product = {
   price: number;
   discount: number;
   inventoryCount: number;
+  soldCount: number;
   images: string[];
   createdAt: Date;
   updatedAt: Date;

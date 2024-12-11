@@ -1,3 +1,6 @@
+import { FaShoppingCart } from "react-icons/fa";
+import { FaCodeCompare } from "react-icons/fa6";
+import { MdPreview } from "react-icons/md";
 export type SiteConfig = typeof siteConfig;
 
 export const siteConfig = {
@@ -5,24 +8,19 @@ export const siteConfig = {
   description: "Make beautiful websites regardless of your design experience.",
   navItems: [
     {
-      label: "Home",
-      href: "/",
+      label: "Cart",
+      icon: FaShoppingCart,
+      href: "/user/cart",
     },
     {
-      label: "Docs",
-      href: "/docs",
+      label: "Recently Viewed",
+      icon: MdPreview,
+      href: "/user/recently-viewed",
     },
     {
-      label: "Pricing",
-      href: "/pricing",
-    },
-    {
-      label: "Blog",
-      href: "/blog",
-    },
-    {
-      label: "About",
-      href: "/about",
+      label: "Compare",
+      icon: FaCodeCompare,
+      href: "/compare",
     },
   ],
   navMenuItems: [

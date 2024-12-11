@@ -97,7 +97,7 @@ const ProductDetailsPage = ({ params }: { params: { productId: string } }) => {
           <strong>{vendor?.shopName}</strong>, specializing in high-quality
           products,{" "}
           {discount > 10 && `with a attractive discount of ${discount}%`}.{" "}
-          {inventoryCount < 1000 &&
+          {inventoryCount < 100 &&
             `Only ${inventoryCount} left in stock! So Hurry Up!`}
         </p>
       </div>
@@ -120,7 +120,7 @@ const ProductDetailsPage = ({ params }: { params: { productId: string } }) => {
             color="primary"
             radius="full"
             size="sm"
-            variant="solid"
+            variant="shadow"
           >
             Follow
           </Button>
