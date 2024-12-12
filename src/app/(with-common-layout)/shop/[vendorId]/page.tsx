@@ -37,11 +37,8 @@ const ShopPage = ({ params }: { params: { vendorId: string } }) => {
     () => !!vendorId
   );
 
-  const { data: followedVendors } = useFetchData(
-    `${GET_FOLLOWED_VENDORS}`,
-    undefined,
-    () => !!vendorId
-  );
+  const { data: followedVendors = [], isLoading: isFollowedLoading } =
+    useFetchData(`${GET_FOLLOWED_VENDORS}`, undefined, () => !!vendorId);
 
   const { mutate } = usePostData({
     invalidateQueries: [GET_FOLLOWED_VENDORS],

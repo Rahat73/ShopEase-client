@@ -24,6 +24,11 @@ export const usePostData = ({
   return useMutation<any, Error, TPostMutation>({
     mutationFn: async ({ url, postData }) => await postService(url, postData),
     onSuccess: (data) => {
+      if (data === "invalid signature") {
+        toast.error("Please login.");
+
+        return;
+      }
       if (data?.success) {
         queryClient.invalidateQueries({ queryKey: invalidateQueries });
         if (!doNotShowNotification) {
@@ -34,6 +39,7 @@ export const usePostData = ({
       }
     },
     onError: (error: any) => {
+      console.log(error);
       if (!doNotShowNotification) {
         toast.error(error.message);
       }

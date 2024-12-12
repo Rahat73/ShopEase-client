@@ -16,6 +16,7 @@ import {
 import { useState } from "react";
 import { Link } from "@nextui-org/link";
 import { useRouter } from "next/navigation";
+import { FaMinus, FaPlus } from "react-icons/fa6";
 
 import { useFetchData } from "@/src/hooks/fetch.hook";
 import { GET_ALL_PRODUCTS } from "@/src/api-endpoints/product.api";
@@ -30,6 +31,7 @@ import {
 } from "@/src/api-endpoints/follow.api";
 
 const ProductDetailsPage = ({ params }: { params: { productId: string } }) => {
+  const [quantity, setQuantity] = useState(1);
   const [isWarningOpen, setIsWarningOpen] = useState(false);
 
   const router = useRouter();
@@ -57,11 +59,12 @@ const ProductDetailsPage = ({ params }: { params: { productId: string } }) => {
     invalidateQueries: [GET_CART],
   });
 
-  const { data: followedVendors, isLoading: isFollowedLoading } = useFetchData(
-    `${GET_FOLLOWED_VENDORS}`,
-    undefined,
-    () => !!params.productId
-  );
+  const { data: followedVendors = [], isLoading: isFollowedLoading } =
+    useFetchData(
+      `${GET_FOLLOWED_VENDORS}`,
+      undefined,
+      () => !!params.productId
+    );
 
   const { mutate } = usePostData({
     invalidateQueries: [GET_FOLLOWED_VENDORS],
@@ -85,7 +88,7 @@ const ProductDetailsPage = ({ params }: { params: { productId: string } }) => {
       url: ADD_TO_CART,
       postData: {
         productId: params.productId,
-        quantity: 1,
+        quantity,
       },
     });
   };
@@ -103,6 +106,12 @@ const ProductDetailsPage = ({ params }: { params: { productId: string } }) => {
     }
 
     addToCart();
+  };
+
+  const handleBuyNow = () => {
+    router.push(
+      `/user/order?productId=${params.productId}&quantity=${quantity}`
+    );
   };
 
   const handleFollow = () => {
@@ -180,11 +189,35 @@ const ProductDetailsPage = ({ params }: { params: { productId: string } }) => {
               <p className="text-default-600">Category: {category?.name}</p>
             </div>
 
+            <div className="flex items-center justify-between my-3">
+              <div className="flex items-center space-x-2">
+                <Button
+                  isIconOnly
+                  size="sm"
+                  variant="flat"
+                  isDisabled={quantity === 1}
+                  onPress={() => setQuantity((prev) => prev - 1)}
+                >
+                  <FaMinus size={16} />
+                </Button>
+                <span className="w-8 text-center">{quantity}</span>
+                <Button
+                  isIconOnly
+                  size="sm"
+                  variant="flat"
+                  isDisabled={quantity === data.inventoryCount}
+                  onPress={() => setQuantity((prev) => prev + 1)}
+                >
+                  <FaPlus size={16} />
+                </Button>
+              </div>
+            </div>
+
             <div className="flex space-x-4">
               <Button radius="full" color="default" onPress={handleAddToCart}>
                 Add to cart
               </Button>
-              <Button radius="full" color="success">
+              <Button radius="full" color="success" onPress={handleBuyNow}>
                 Buy Now
               </Button>
             </div>

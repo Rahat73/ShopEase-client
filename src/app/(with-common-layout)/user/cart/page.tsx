@@ -1,6 +1,6 @@
 "use client";
 
-import { Divider, Input } from "@nextui-org/react";
+import { Divider, Select, SelectItem } from "@nextui-org/react";
 import { Button } from "@nextui-org/button";
 import { useEffect, useState } from "react";
 
@@ -9,6 +9,7 @@ import CartItem from "./_components/cart-item";
 import { GET_CART } from "@/src/api-endpoints/cart.api";
 import { useFetchData } from "@/src/hooks/fetch.hook";
 import { Cart, Product } from "@/src/types";
+import { Coupons } from "@/src/constants";
 
 // type TCartItem = {
 //   quantity: number;
@@ -33,6 +34,7 @@ const CartPage = () => {
   // };
 
   const [subtotal, setSubtotal] = useState(0);
+  const [selectedCoupon, setSelectedCoupon] = useState("");
 
   const { data } = useFetchData(GET_CART);
 
@@ -55,6 +57,10 @@ const CartPage = () => {
       setSubtotal(calculateSubtotal(data));
     }
   }, [data]);
+
+  const discount = () => {
+    return Coupons.find((coupon) => coupon.key === selectedCoupon)?.value || 0;
+  };
 
   return (
     <div className="py-5">
@@ -87,14 +93,25 @@ const CartPage = () => {
               </p>
               <p className="text-lg">${subtotal.toFixed(2)} </p>
             </div>
-            <Input
-              className="max-w-md mx-auto"
-              variant="bordered"
-              label="Coupon Code"
-            />
+            <Select
+              className="max-w-sm mx-auto"
+              label="Select a coupon"
+              onChange={(e) => setSelectedCoupon(e.target.value)}
+            >
+              {Coupons.map((coupon) => (
+                <SelectItem key={coupon.key} textValue={coupon.label}>
+                  {coupon.label}{" "}
+                  <span className="ml-5 text-tiny">
+                    Enjoy-${coupon.value}% off
+                  </span>
+                </SelectItem>
+              ))}
+            </Select>
             <div className="w-3/4 mx-auto flex justify-between py-4">
               <p className="text-lg">Total: </p>
-              <p className="text-lg">${subtotal.toFixed(2)} </p>
+              <p className="text-lg">
+                ${(subtotal - (subtotal * discount()) / 100).toFixed(2)}{" "}
+              </p>
             </div>
             <Button color="success" className="max-w-lg mx-auto">
               Proceed to Checkout
