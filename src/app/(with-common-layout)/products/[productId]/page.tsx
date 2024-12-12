@@ -14,6 +14,8 @@ import {
   ModalHeader,
 } from "@nextui-org/react";
 import { useState } from "react";
+import { Link } from "@nextui-org/link";
+import { useRouter } from "next/navigation";
 
 import { useFetchData } from "@/src/hooks/fetch.hook";
 import { GET_ALL_PRODUCTS } from "@/src/api-endpoints/product.api";
@@ -22,9 +24,15 @@ import { usePostData } from "@/src/hooks/mutation.hook";
 import { ADD_TO_CART, GET_CART } from "@/src/api-endpoints/cart.api";
 import ProductCard from "@/src/components/ui/product-card";
 import { Product } from "@/src/types";
+import {
+  FOLLOW_VENDOR,
+  GET_FOLLOWED_VENDORS,
+} from "@/src/api-endpoints/follow.api";
 
 const ProductDetailsPage = ({ params }: { params: { productId: string } }) => {
   const [isWarningOpen, setIsWarningOpen] = useState(false);
+
+  const router = useRouter();
 
   const { data, isLoading: productLoading } = useFetchData(
     `${GET_ALL_PRODUCTS}/${params.productId}`,
@@ -49,7 +57,22 @@ const ProductDetailsPage = ({ params }: { params: { productId: string } }) => {
     invalidateQueries: [GET_CART],
   });
 
-  if (productLoading || cartLoading) {
+  const { data: followedVendors, isLoading: isFollowedLoading } = useFetchData(
+    `${GET_FOLLOWED_VENDORS}`,
+    undefined,
+    () => !!params.productId
+  );
+
+  const { mutate } = usePostData({
+    invalidateQueries: [GET_FOLLOWED_VENDORS],
+  });
+
+  if (
+    productLoading ||
+    cartLoading ||
+    relatedProductsLoading ||
+    isFollowedLoading
+  ) {
     return (
       <div className="flex justify-center items-center h-screen">
         <p>Loading...</p>
@@ -81,6 +104,16 @@ const ProductDetailsPage = ({ params }: { params: { productId: string } }) => {
 
     addToCart();
   };
+
+  const handleFollow = () => {
+    mutate({
+      url: `${FOLLOW_VENDOR}/${data.vendorId}`,
+    });
+  };
+
+  const isVendorFollowed = followedVendors.find(
+    (item: any) => item.vendorId === data.vendorId
+  );
 
   const {
     name,
@@ -137,7 +170,10 @@ const ProductDetailsPage = ({ params }: { params: { productId: string } }) => {
             </div>
 
             <div className="mb-4">
-              <p className="text-lg font-medium">Vendor: {vendor?.shopName}</p>
+              Vendor:
+              <Link href={`/shop/${data.vendorId}`}>
+                <p className="text-lg font-medium ml-2">{vendor?.shopName}</p>
+              </Link>
             </div>
 
             <div className="mb-4">
@@ -159,16 +195,22 @@ const ProductDetailsPage = ({ params }: { params: { productId: string } }) => {
           <h2 className="text-2xl font-bold mb-4">Additional Information</h2>
           <p className="text-default-600">
             This product is brought to you by our trusted vendor,{" "}
-            <strong>{vendor?.shopName}</strong>, specializing in high-quality
-            products,{" "}
+            <strong>
+              <Link href={`/shop/${data.vendorId}`}>{vendor.shopName}</Link>
+            </strong>
+            , specializing in high-quality products,{" "}
             {discount > 10 && `with a attractive discount of ${discount}%`}.{" "}
             {inventoryCount < 100 &&
               `Only ${inventoryCount} left in stock! So Hurry Up!`}
           </p>
         </div>
 
-        <Card className="max-w-md mx-auto mt-10 p-2">
-          <CardHeader className="justify-between">
+        <Card
+          isPressable
+          className="max-w-md mx-auto mt-10 p-2"
+          onPress={() => router.push(`/shop/${data.vendorId}`)}
+        >
+          <CardHeader className="justify-between space-x-10">
             <div className="flex gap-5">
               <Avatar
                 isBordered
@@ -187,12 +229,13 @@ const ProductDetailsPage = ({ params }: { params: { productId: string } }) => {
             </div>
             <Button
               className="text-tiny"
-              color="primary"
+              color={isVendorFollowed ? "default" : "primary"}
               radius="full"
               size="sm"
               variant="shadow"
+              onPress={handleFollow}
             >
-              Follow
+              {isVendorFollowed ? "Unfollow" : "Follow"}
             </Button>
           </CardHeader>
           <CardBody className="px-3 py-0 text-small text-default-500">
