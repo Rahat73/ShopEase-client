@@ -8,6 +8,8 @@ import { useRouter } from "next/navigation";
 import { GET_MY_ORDERS } from "@/src/api-endpoints/order.api";
 import { useFetchData } from "@/src/hooks/fetch.hook";
 import aamarpay from "@/src/assets/images/aamarpay.jpg";
+import { usePostData } from "@/src/hooks/mutation.hook";
+import { SET_UP_PAYMENT } from "@/src/api-endpoints/payment.api";
 
 const PaymentPage = ({
   searchParams,
@@ -23,7 +25,22 @@ const PaymentPage = ({
     () => !!orderId
   );
 
-  console.log(orderData);
+  const { mutateAsync: setupPayment } = usePostData({
+    invalidateQueries: [],
+  });
+
+  const handlePayment = async () => {
+    const res = await setupPayment({
+      url: SET_UP_PAYMENT,
+      postData: {
+        orderId,
+      },
+    });
+
+    if (res.success) {
+      window.location.href = res.data.payment_url;
+    }
+  };
 
   return (
     <div className="py-5">
@@ -50,7 +67,10 @@ const PaymentPage = ({
             <GiTakeMyMoney className="size-14" />
             <p className="text-tiny text-center">Cash on Delivery</p>
           </button>
-          <button className="size-28 rounded-md bg-default-500 text-white flex justify-center items-center">
+          <button
+            className="size-28 rounded-md bg-default-500 text-white flex justify-center items-center"
+            onClick={handlePayment}
+          >
             <Image src={aamarpay} className="rounded-md" alt="aamarpay" />
           </button>
         </div>
