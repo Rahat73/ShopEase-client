@@ -39,7 +39,6 @@ export const usePostData = ({
       }
     },
     onError: (error: any) => {
-      console.log(error);
       if (!doNotShowNotification) {
         toast.error(error.message);
       }

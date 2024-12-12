@@ -1,8 +1,9 @@
 "use client";
 
-import { IInput } from "@/src/types";
 import { Input } from "@nextui-org/input";
 import { useFormContext } from "react-hook-form";
+
+import { IInput } from "@/src/types";
 
 export default function AppInput({
   variant = "bordered",

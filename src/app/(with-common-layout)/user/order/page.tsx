@@ -12,10 +12,18 @@ import {
 import { useEffect, useState } from "react";
 import { Link } from "@nextui-org/link";
 import { FaMinus, FaPlus } from "react-icons/fa";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { FieldValues, SubmitHandler } from "react-hook-form";
+import { useRouter } from "next/navigation";
 
 import { GET_ALL_PRODUCTS } from "@/src/api-endpoints/product.api";
 import { useFetchData } from "@/src/hooks/fetch.hook";
 import { Coupons, noImg } from "@/src/constants";
+import { usePostData } from "@/src/hooks/mutation.hook";
+import { CREATE_ORDER, GET_MY_ORDERS } from "@/src/api-endpoints/order.api";
+import AppForm from "@/src/components/form/app-form";
+import AppInput from "@/src/components/form/app-input";
+import { createOrderValidationSchema } from "@/src/schemas/order.schema";
 
 const OrderPage = ({
   searchParams,
@@ -26,6 +34,7 @@ const OrderPage = ({
   const [newQuantity, setNewQuantity] = useState(0);
   const [selectedCoupon, setSelectedCoupon] = useState("");
 
+  const router = useRouter();
   const { productId, quantity } = searchParams;
 
   const { data, isLoading } = useFetchData(
@@ -33,6 +42,31 @@ const OrderPage = ({
     undefined,
     () => !!productId
   );
+
+  const { mutateAsync: createOrder } = usePostData({
+    invalidateQueries: [GET_ALL_PRODUCTS, GET_MY_ORDERS],
+    doNotShowNotification: true,
+  });
+
+  const handleProceedToCheckout: SubmitHandler<FieldValues> = async (data) => {
+    const res = await createOrder({
+      url: CREATE_ORDER,
+      postData: {
+        ...data,
+        discount: discount(),
+        orderItems: [
+          {
+            productId: productId,
+            quantity: newQuantity + Number(quantity),
+          },
+        ],
+      },
+    });
+
+    if (res.success) {
+      router.push("/user/payment?orderId=" + res.data.id);
+    }
+  };
 
   useEffect(() => {
     if (data) {
@@ -121,34 +155,48 @@ const OrderPage = ({
         </div>
         <div className="col-span-5">
           <p className="text-xl font-bold text-center mb-4">Order Summary</p>
-          <div className="flex flex-col item-denter space-y-3">
-            <div className="w-3/4 mx-auto flex justify-between my-4">
-              <p className="text-lg">Subtotal:</p>
-              <p className="text-lg">${subtotal.toFixed(2)} </p>
-            </div>
-            <Select
-              className="max-w-sm mx-auto"
-              label="Select a coupon"
-              onChange={(e) => setSelectedCoupon(e.target.value)}
+          <div className="max-w-md mx-auto flex flex-col item-denter space-y-3">
+            <AppForm
+              resolver={zodResolver(createOrderValidationSchema)}
+              onSubmit={handleProceedToCheckout}
             >
-              {Coupons.map((coupon) => (
-                <SelectItem key={coupon.key} textValue={coupon.label}>
-                  {coupon.label}{" "}
-                  <span className="ml-5 text-tiny">
-                    Enjoy-${coupon.value}% off
-                  </span>
-                </SelectItem>
-              ))}
-            </Select>
-            <div className="w-3/4 mx-auto flex justify-between py-4">
-              <p className="text-lg">Total: </p>
-              <p className="text-lg">
-                ${(subtotal - (subtotal * discount()) / 100).toFixed(2)}{" "}
-              </p>
-            </div>
-            <Button color="success" className="max-w-lg mx-auto">
-              Proceed to Checkout
-            </Button>
+              <div className="my-2 max-w-sm mx-auto">
+                <AppInput name="phone" label="Phone" type="number" />
+              </div>
+              <div className="my-2 max-w-sm mx-auto">
+                <AppInput name="address" label="Address" type="text" />
+              </div>
+              <div className="my-2 max-w-sm mx-auto">
+                <Select
+                  label="Select a coupon"
+                  onChange={(e) => setSelectedCoupon(e.target.value)}
+                >
+                  {Coupons.map((coupon) => (
+                    <SelectItem key={coupon.key} textValue={coupon.label}>
+                      {coupon.label}{" "}
+                      <span className="ml-5 text-tiny">
+                        Enjoy-${coupon.value}% off
+                      </span>
+                    </SelectItem>
+                  ))}
+                </Select>
+              </div>
+              <div className="w-3/4 mx-auto flex justify-between mt-4">
+                <p className="text-lg">Subtotal:</p>
+                <p className="text-lg">${subtotal.toFixed(2)} </p>
+              </div>
+              <div className="w-3/4 mx-auto flex justify-between">
+                <p className="text-lg">Total: </p>
+                <p className="text-lg">
+                  ${(subtotal - (subtotal * discount()) / 100).toFixed(2)}{" "}
+                </p>
+              </div>
+              <div className=" flex justify-center my-3">
+                <Button color="success" className="" type="submit">
+                  Proceed to Payment
+                </Button>
+              </div>
+            </AppForm>
           </div>
         </div>
       </div>
