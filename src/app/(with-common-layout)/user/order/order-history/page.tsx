@@ -18,6 +18,7 @@ import { Key, useEffect, useState } from "react";
 import { GET_MY_ORDERS } from "@/src/api-endpoints/order.api";
 import { useFetchData } from "@/src/hooks/fetch.hook";
 import { Order } from "@/src/types";
+import AppSpinner from "@/src/components/ui/loading-contents/app-spinner";
 
 const statusColorMap = {
   PENDING: "warning",
@@ -153,7 +154,7 @@ const OrderHistoryPage = () => {
             </TableColumn>
           ))}
         </TableHeader>
-        <TableBody>
+        <TableBody isLoading={isLoading} loadingContent={<AppSpinner />}>
           {ordersData.map((order: Order) => (
             <TableRow key={order.id}>
               {(columnKey) => (

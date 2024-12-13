@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const updateUserValidationSchema = z.object({
-  name: z.string().max(100, "Name too long").optional(),
-  bio: z.string().optional(),
+export const updateAdminValidationSchema = z.object({
+  name: z.string().min(1, "Name is required").max(100, "Name too long"),
+  phone: z.string().min(1, "Phone number is required"),
 });

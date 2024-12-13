@@ -11,6 +11,7 @@ interface formConfig {
 interface IProps extends formConfig {
   children: ReactNode;
   onSubmit: SubmitHandler<any>;
+  reset?: boolean;
 }
 
 export default function AppForm({
@@ -18,6 +19,7 @@ export default function AppForm({
   onSubmit,
   defaultValues,
   resolver,
+  reset = true,
 }: IProps) {
   const formConfig: formConfig = {};
 
@@ -33,7 +35,9 @@ export default function AppForm({
 
   const submitHandler = methods.handleSubmit((data) => {
     onSubmit(data);
-    methods.reset();
+    if (reset) {
+      methods.reset();
+    }
   });
 
   return (

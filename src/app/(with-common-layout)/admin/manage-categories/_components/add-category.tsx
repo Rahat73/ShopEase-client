@@ -111,10 +111,10 @@ const AddCategory = () => {
                   Upload Category Icon
                 </label>
                 <input
-                  multiple
                   className="hidden"
                   id="image"
                   type="file"
+                  accept="image/*"
                   onChange={(e) => handleImageChange(e)}
                 />
                 {imagePreviews && (

@@ -157,10 +157,10 @@ const SignUp = () => {
                         Upload Profile Picture
                       </label>
                       <input
-                        multiple
                         className="hidden"
                         id="image"
                         type="file"
+                        accept="image/*"
                         onChange={(e) => handleImageChange(e)}
                       />
                     </div>
