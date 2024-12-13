@@ -52,7 +52,7 @@ const renderCell = (order: Record<string, any>, columnKey: Key) => {
             ${order.totalAmount.toFixed(2)}
           </p>
           <p className="text-small text-default-400">
-            Discount: {order.discount.toFixed(2)}%
+            Discount: {order.discount}%
           </p>
         </div>
       );

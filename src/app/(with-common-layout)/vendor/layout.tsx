@@ -26,7 +26,7 @@ const VendorLayout = ({ children }: { children: ReactNode }) => {
     },
     {
       name: "Product List",
-      href: "/vendor/products",
+      href: "/vendor/product-list",
       icon: <MdOutlineListAlt size={20} className="mr-3" />,
     },
     {

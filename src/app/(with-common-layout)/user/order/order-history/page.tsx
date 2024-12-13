@@ -57,7 +57,7 @@ const renderCell = (order: Record<string, any>, columnKey: Key) => {
     case "discount":
       return (
         <div className="flex flex-col">
-          <p className="text-bold text-small">{cellValue.toFixed(2)}%</p>
+          <p className="text-bold text-small">{cellValue}%</p>
         </div>
       );
     case "status":

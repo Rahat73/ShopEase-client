@@ -137,6 +137,8 @@ export type Order = {
   customer: Customer;
   vendorId: string;
   vendor: TVendor;
+  phone: string;
+  address: string;
   orderItems: OrderItem[];
 };
 

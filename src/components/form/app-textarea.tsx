@@ -21,7 +21,7 @@ export default function AppTextarea({
       errorMessage={errors[name] ? (errors[name]?.message as string) : ""}
       isInvalid={!!errors[name]}
       label={label}
-      minRows={4}
+      minRows={2}
       variant={variant}
       placeholder={placeholder}
       defaultValue={defaultValue}
