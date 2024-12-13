@@ -63,6 +63,16 @@ export const useUpdateData = ({
   return useMutation<any, Error, TPostMutation>({
     mutationFn: async ({ url, postData }) => await updateService(url, postData),
     onSuccess: (data) => {
+      if (data === "invalid signature") {
+        toast.error("Please login.");
+
+        return;
+      }
+      if (typeof data === "string") {
+        toast.error(data);
+
+        return;
+      }
       if (data?.success) {
         queryClient.invalidateQueries({ queryKey: invalidateQueries });
         if (!doNotShowNotification) {
@@ -92,6 +102,16 @@ export const useDeleteData = ({
   return useMutation<any, Error, TPostMutation>({
     mutationFn: async ({ url }) => await deleteService(url),
     onSuccess: (data) => {
+      if (data === "invalid signature") {
+        toast.error("Please login.");
+
+        return;
+      }
+      if (typeof data === "string") {
+        toast.error(data);
+
+        return;
+      }
       if (data?.success) {
         queryClient.invalidateQueries({ queryKey: invalidateQueries });
         if (!doNotShowNotification) {
