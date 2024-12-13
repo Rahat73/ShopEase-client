@@ -28,7 +28,11 @@ const SignIn = () => {
     const res = await handleUserLogin(data);
 
     if (res.success) {
-      if (redirect) {
+      if (res.data.user.role === "VENDOR") {
+        router.push("/vendor/dashboard");
+      } else if (res.data.user.role === "ADMIN") {
+        router.push("/admin/dashboard");
+      } else if (redirect) {
         router.push(redirect);
       } else {
         router.push("/");

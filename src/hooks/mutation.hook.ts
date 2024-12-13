@@ -29,6 +29,11 @@ export const usePostData = ({
 
         return;
       }
+      if (typeof data === "string") {
+        toast.error(data);
+
+        return;
+      }
       if (data?.success) {
         queryClient.invalidateQueries({ queryKey: invalidateQueries });
         if (!doNotShowNotification) {
