@@ -6,6 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@nextui-org/button";
 import { ChangeEvent, useState } from "react";
 import { Input } from "@nextui-org/input";
+import { FaEdit } from "react-icons/fa";
 
 import {
   GET_MY_PROFILE,
@@ -18,6 +19,7 @@ import { updateAdminValidationSchema } from "@/src/schemas/user.schema";
 import { TAdmin } from "@/src/types";
 import { useUpdateData } from "@/src/hooks/mutation.hook";
 import { noImg } from "@/src/constants";
+import ChangePassword from "@/src/components/shared/change-password";
 
 const AdminDashboard = () => {
   const [imageFiles, setImageFiles] = useState<File | undefined>();
@@ -73,7 +75,7 @@ const AdminDashboard = () => {
         <p>Dashboard</p>
       </div>
       <Divider className="my-4" />
-      <div className="max-w-xs mx-auto my-10">
+      <div className="max-w-xs mx-auto my-10 relative">
         <div className="flex justify-center">
           <label htmlFor="image" className="cursor-pointer">
             <Avatar
@@ -114,17 +116,19 @@ const AdminDashboard = () => {
           <div className="my-3">
             <AppInput label="phone" name="phone" type="number" />
           </div>
-          <div className="w-full flex justify-end">
+          <div className="w-full flex justify-between">
             <Button
               type="submit"
               color="primary"
               isDisabled={isLoading}
               isLoading={isPending}
+              startContent={<FaEdit />}
             >
               Update
             </Button>
           </div>
         </AppForm>
+        <ChangePassword />
       </div>
     </div>
   );

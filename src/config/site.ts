@@ -1,4 +1,4 @@
-import { FaShoppingCart } from "react-icons/fa";
+import { FaShoppingCart, FaUser } from "react-icons/fa";
 import { FaCodeCompare } from "react-icons/fa6";
 import { MdPreview } from "react-icons/md";
 export type SiteConfig = typeof siteConfig;
@@ -7,6 +7,11 @@ export const siteConfig = {
   name: "ShopEase",
   description: "Make beautiful websites regardless of your design experience.",
   navItems: [
+    {
+      label: "Profile",
+      icon: FaUser,
+      href: "/user/profile",
+    },
     {
       label: "Cart",
       icon: FaShoppingCart,

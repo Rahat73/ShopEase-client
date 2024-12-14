@@ -37,7 +37,7 @@ export const Navbar = () => {
           </NavbarBrand>
         </NavbarContent>
 
-        <NavbarItem className="hidden md:flex w-6/12">
+        <NavbarItem className="hidden md:flex basis-2/5">
           <SearchBar />
         </NavbarItem>
 

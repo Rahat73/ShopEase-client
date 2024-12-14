@@ -11,3 +11,9 @@ export const updateVendorValidationSchema = z.object({
   phone: z.string().min(1, "Phone number is required"),
   address: z.string().min(1, "Address is required"),
 });
+
+export const updateCustomerValidationSchema = z.object({
+  name: z.string().min(1, "Name is required").max(100, "Name too long"),
+  phone: z.string().optional(),
+  address: z.string().optional(),
+});

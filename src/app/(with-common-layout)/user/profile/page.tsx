@@ -6,29 +6,29 @@ import { Input } from "@nextui-org/input";
 import { Avatar, Divider } from "@nextui-org/react";
 import { ChangeEvent, useState } from "react";
 import { FieldValues, SubmitHandler } from "react-hook-form";
-import { toast } from "sonner";
 import { FaEdit } from "react-icons/fa";
 
+import ChangePassword from "../../../../components/shared/change-password";
+
+import AppForm from "@/src/components/form/app-form";
+import AppInput from "@/src/components/form/app-input";
+import { noImg } from "@/src/constants";
+import { updateCustomerValidationSchema } from "@/src/schemas/user.schema";
+import { useFetchData } from "@/src/hooks/fetch.hook";
 import {
   GET_MY_PROFILE,
   UPDATE_MY_PROFILE,
 } from "@/src/api-endpoints/user.api";
-import AppForm from "@/src/components/form/app-form";
-import AppInput from "@/src/components/form/app-input";
-import { noImg } from "@/src/constants";
-import { useFetchData } from "@/src/hooks/fetch.hook";
+import { Customer } from "@/src/types";
 import { useUpdateData } from "@/src/hooks/mutation.hook";
-import { TVendor } from "@/src/types";
-import { updateVendorValidationSchema } from "@/src/schemas/user.schema";
 import AppTextarea from "@/src/components/form/app-textarea";
-import ChangePassword from "@/src/components/shared/change-password";
 
-const VendorDashboard = () => {
+const UserProfilePage = () => {
   const [imageFiles, setImageFiles] = useState<File | undefined>();
   const [imagePreviews, setImagePreviews] = useState<string | undefined>();
 
   const { data, isLoading } = useFetchData(GET_MY_PROFILE) as {
-    data: TVendor;
+    data: Customer;
     isLoading: boolean;
   };
 
@@ -48,11 +48,11 @@ const VendorDashboard = () => {
     }
   };
 
-  const { mutateAsync: updateProfile, isPending } = useUpdateData({
+  const { mutate: updateProfile, isPending } = useUpdateData({
     invalidateQueries: [GET_MY_PROFILE],
   });
 
-  const handleUpdateProfile: SubmitHandler<FieldValues> = async (data) => {
+  const handleUpdateProfile: SubmitHandler<FieldValues> = (data) => {
     const formdata = new FormData();
 
     if (imageFiles) {
@@ -61,14 +61,10 @@ const VendorDashboard = () => {
 
     formdata.append("data", JSON.stringify(data));
 
-    const res = await updateProfile({
+    updateProfile({
       url: UPDATE_MY_PROFILE,
       postData: formdata,
     });
-
-    if (typeof res === "string" && res === "Duplicate Key error") {
-      toast.error("Shop name already exists");
-    }
   };
 
   if (isLoading) {
@@ -76,9 +72,9 @@ const VendorDashboard = () => {
   }
 
   return (
-    <div className="my-1">
+    <div className="py-5">
       <div className="text-xl font-bold space-x-4 flex justify-between items-center">
-        <p>Dashboard</p>
+        <p>My Profile</p>
       </div>
       <Divider className="my-4" />
       <div className="max-w-xs mx-auto my-10 relative">
@@ -87,7 +83,7 @@ const VendorDashboard = () => {
             <Avatar
               isBordered
               className="w-24 h-24"
-              src={imagePreviews || data?.shopLogo || noImg}
+              src={imagePreviews || data?.profilePhoto || noImg}
               alt="avatar"
             />
           </label>
@@ -108,22 +104,19 @@ const VendorDashboard = () => {
           />
         </div>
         <AppForm
-          resolver={zodResolver(updateVendorValidationSchema)}
+          resolver={zodResolver(updateCustomerValidationSchema)}
           defaultValues={data}
           reset={false}
           onSubmit={handleUpdateProfile}
         >
           <div className="my-3">
-            <AppInput label="Shop Name" name="shopName" />
-          </div>
-          <div className="my-3">
-            <AppTextarea label="Description" name="shopDescription" />
-          </div>
-          <div className="my-3">
-            <AppInput label="Phone" name="phone" type="number" />
+            <AppInput label="Name" name="name" />
           </div>
           <div className="my-3">
             <AppTextarea label="Address" name="address" />
+          </div>
+          <div className="my-3">
+            <AppInput label="phone" name="phone" type="number" />
           </div>
           <div className="w-full flex justify-between">
             <Button
@@ -143,4 +136,4 @@ const VendorDashboard = () => {
   );
 };
 
-export default VendorDashboard;
+export default UserProfilePage;
