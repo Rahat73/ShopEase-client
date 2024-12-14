@@ -9,6 +9,7 @@ import {
   MdOutlineDashboard,
   MdOutlineHistory,
   MdOutlineListAlt,
+  MdReviews,
 } from "react-icons/md";
 
 const VendorLayout = ({ children }: { children: ReactNode }) => {
@@ -38,6 +39,11 @@ const VendorLayout = ({ children }: { children: ReactNode }) => {
       name: "Order History",
       href: "/vendor/order-history",
       icon: <MdOutlineHistory size={20} className="mr-3" />,
+    },
+    {
+      name: "Unreplied Reviews",
+      href: "/vendor/unreplied-reviews",
+      icon: <MdReviews size={20} className="mr-3" />,
     },
   ];
 

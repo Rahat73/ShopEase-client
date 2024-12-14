@@ -14,6 +14,9 @@ import {
 } from "@nextui-org/react";
 import { format } from "date-fns";
 import { Key, useEffect, useState } from "react";
+import { Button } from "@nextui-org/button";
+import { MdOutlinePayments, MdRateReview } from "react-icons/md";
+import Link from "next/link";
 
 import { GET_MY_ORDERS } from "@/src/api-endpoints/order.api";
 import { useFetchData } from "@/src/hooks/fetch.hook";
@@ -29,11 +32,11 @@ const statusColorMap = {
 const columns = [
   { name: "ORDER ID", uid: "id" },
   { name: "TOTAL AMOUNT", uid: "totalAmount" },
-  { name: "DISCOUNT", uid: "discount" },
   { name: "STATUS", uid: "status" },
-  { name: "ADDRESS", uid: "address" },
-  { name: "PHONE", uid: "phone" },
+  { name: "contactInfo", uid: "contactInfo" },
   { name: "DATE", uid: "createdAt" },
+  { name: "REVIEW", uid: "review" },
+  { name: "PAYMENT", uid: "payment" },
 ];
 
 const renderCell = (order: Record<string, any>, columnKey: Key) => {
@@ -52,12 +55,9 @@ const renderCell = (order: Record<string, any>, columnKey: Key) => {
       return (
         <div className="flex flex-col">
           <p className="text-bold text-small">${cellValue.toFixed(2)}</p>
-        </div>
-      );
-    case "discount":
-      return (
-        <div className="flex flex-col">
-          <p className="text-bold text-small">{cellValue}%</p>
+          <p className="text-default-400 text-tiny">
+            Discount: {order.discount}%
+          </p>
         </div>
       );
     case "status":
@@ -76,16 +76,11 @@ const renderCell = (order: Record<string, any>, columnKey: Key) => {
           {cellValue}
         </Chip>
       );
-    case "address":
+    case "contactInfo":
       return (
         <div className="flex flex-col">
-          <p className="text-bold text-small">{cellValue || "N/A"}</p>
-        </div>
-      );
-    case "phone":
-      return (
-        <div className="flex flex-col">
-          <p className="text-bold text-small">{cellValue || "N/A"}</p>
+          <p className="text-bold text-small">{order.address || "N/A"}</p>
+          <p className="text-tiny text-default-400">{order.phone || "N/A"}</p>
         </div>
       );
     case "createdAt":
@@ -98,6 +93,34 @@ const renderCell = (order: Record<string, any>, columnKey: Key) => {
             {format(new Date(cellValue), "HH:mm:ss")}
           </p>
         </div>
+      );
+    case "review":
+      return (
+        <>
+          {order.status === "COMPLETED" && (
+            <Tooltip content={<span>Write a review</span>}>
+              <Link href={`/user/order/order-details?orderId=${order.id}`}>
+                <Button isIconOnly size="sm" variant="light" color="primary">
+                  <MdRateReview className="text-xl" />
+                </Button>
+              </Link>
+            </Tooltip>
+          )}
+        </>
+      );
+    case "payment":
+      return (
+        <>
+          {order.status === "PENDING" && (
+            <Tooltip content={<span>Complete payment</span>}>
+              <Link href={"/user/payment?orderId=" + order.id}>
+                <Button isIconOnly size="sm" variant="light" color="primary">
+                  <MdOutlinePayments className="text-xl" />
+                </Button>
+              </Link>
+            </Tooltip>
+          )}
+        </>
       );
     default:
       return cellValue;

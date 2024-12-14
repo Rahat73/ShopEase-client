@@ -1,4 +1,3 @@
-import { Link } from "@nextui-org/link";
 import {
   NavbarBrand,
   NavbarContent,
@@ -20,8 +19,11 @@ import SearchBar from "./search-bar";
 import logo from "@/src/assets/images/logo.png";
 import { ThemeSwitch } from "@/src/components/theme-switch";
 import { siteConfig } from "@/src/config/site";
+import { getCurrentUser } from "@/src/services/auth-service";
 
-export const Navbar = () => {
+export const Navbar = async () => {
+  const user = await getCurrentUser();
+
   return (
     <div className="py-3">
       <NextUINavbar maxWidth="xl" position="sticky">
@@ -45,25 +47,75 @@ export const Navbar = () => {
           className="hidden sm:flex basis-1/5 sm:basis-full"
           justify="end"
         >
-          {siteConfig.navItems?.map((item) => (
-            <NavbarItem key={item.href}>
-              <Tooltip content={item.label} showArrow={true}>
-                <NextLink
-                  className={clsx(
-                    "data-[active=true]:text-primary data-[active=true]:font-medium"
-                  )}
-                  color="foreground"
-                  href={item.href}
-                >
-                  {item.icon &&
-                    createElement(item.icon, {
-                      size: 20,
-                      className: "hover:opacity-80 text-default-600",
-                    })}
-                </NextLink>
-              </Tooltip>
-            </NavbarItem>
-          ))}
+          {user?.role === "CUSTOMER" && (
+            <>
+              {siteConfig.navItemsCustomer?.map((item) => (
+                <NavbarItem key={item.href}>
+                  <Tooltip content={item.label} showArrow={true}>
+                    <NextLink
+                      className={clsx(
+                        "data-[active=true]:text-primary data-[active=true]:font-medium"
+                      )}
+                      color="foreground"
+                      href={item.href}
+                    >
+                      {item.icon &&
+                        createElement(item.icon, {
+                          size: 20,
+                          className: "hover:opacity-80 text-default-600",
+                        })}
+                    </NextLink>
+                  </Tooltip>
+                </NavbarItem>
+              ))}
+            </>
+          )}
+          {user?.role === "ADMIN" && (
+            <>
+              {siteConfig.navItemsAdmin?.map((item) => (
+                <NavbarItem key={item.href}>
+                  <Tooltip content={item.label} showArrow={true}>
+                    <NextLink
+                      className={clsx(
+                        "data-[active=true]:text-primary data-[active=true]:font-medium"
+                      )}
+                      color="foreground"
+                      href={item.href}
+                    >
+                      {item.icon &&
+                        createElement(item.icon, {
+                          size: 20,
+                          className: "hover:opacity-80 text-default-600",
+                        })}
+                    </NextLink>
+                  </Tooltip>
+                </NavbarItem>
+              ))}
+            </>
+          )}
+          {user?.role === "VENDOR" && (
+            <>
+              {siteConfig.navItemsVendor?.map((item) => (
+                <NavbarItem key={item.href}>
+                  <Tooltip content={item.label} showArrow={true}>
+                    <NextLink
+                      className={clsx(
+                        "data-[active=true]:text-primary data-[active=true]:font-medium"
+                      )}
+                      color="foreground"
+                      href={item.href}
+                    >
+                      {item.icon &&
+                        createElement(item.icon, {
+                          size: 20,
+                          className: "hover:opacity-80 text-default-600",
+                        })}
+                    </NextLink>
+                  </Tooltip>
+                </NavbarItem>
+              ))}
+            </>
+          )}
           <ThemeSwitch />
           <NavbarItem className="hidden sm:flex">
             <AuthBtn />
@@ -80,23 +132,69 @@ export const Navbar = () => {
 
         <NavbarMenu>
           <div className="mx-4 mt-2 flex flex-col gap-2">
-            {siteConfig.navMenuItems.map((item, index) => (
-              <NavbarMenuItem key={`${item}-${index}`}>
-                <Link
-                  color={
-                    index === 2
-                      ? "primary"
-                      : index === siteConfig.navMenuItems.length - 1
-                        ? "danger"
-                        : "foreground"
-                  }
-                  href="#"
-                  size="lg"
-                >
-                  {item.label}
-                </Link>
-              </NavbarMenuItem>
-            ))}
+            {user?.role === "CUSTOMER" && (
+              <>
+                {siteConfig.navItemsCustomer.map((item, index) => (
+                  <NavbarMenuItem key={`${item}-${index}`}>
+                    <NextLink
+                      href={item.href}
+                      className="flex items-center space-x-3"
+                    >
+                      {item.icon &&
+                        createElement(item.icon, {
+                          size: 20,
+                          className: "hover:opacity-80 text-default-600",
+                        })}{" "}
+                      <p className="hover:opacity-80 text-default-600">
+                        {item.label}
+                      </p>
+                    </NextLink>
+                  </NavbarMenuItem>
+                ))}
+              </>
+            )}
+            {user?.role === "ADMIN" && (
+              <>
+                {siteConfig.navItemsAdmin.map((item, index) => (
+                  <NavbarMenuItem key={`${item}-${index}`}>
+                    <NextLink
+                      href={item.href}
+                      className="flex items-center space-x-3"
+                    >
+                      {item.icon &&
+                        createElement(item.icon, {
+                          size: 20,
+                          className: "hover:opacity-80 text-default-600",
+                        })}{" "}
+                      <p className="hover:opacity-80 text-default-600">
+                        {item.label}
+                      </p>
+                    </NextLink>
+                  </NavbarMenuItem>
+                ))}
+              </>
+            )}
+            {user?.role === "VENDOR" && (
+              <>
+                {siteConfig.navItemsVendor.map((item, index) => (
+                  <NavbarMenuItem key={`${item}-${index}`}>
+                    <NextLink
+                      href={item.href}
+                      className="flex items-center space-x-3"
+                    >
+                      {item.icon &&
+                        createElement(item.icon, {
+                          size: 20,
+                          className: "hover:opacity-80 text-default-600",
+                        })}{" "}
+                      <p className="hover:opacity-80 text-default-600">
+                        {item.label}
+                      </p>
+                    </NextLink>
+                  </NavbarMenuItem>
+                ))}
+              </>
+            )}
           </div>
         </NavbarMenu>
       </NextUINavbar>

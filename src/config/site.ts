@@ -1,20 +1,30 @@
-import { FaShoppingCart, FaUser } from "react-icons/fa";
-import { FaCodeCompare } from "react-icons/fa6";
-import { MdPreview } from "react-icons/md";
+import {
+  MdDashboard,
+  MdOutlineCompare,
+  MdOutlineHistory,
+  MdPerson,
+  MdPreview,
+  MdShoppingCart,
+} from "react-icons/md";
 export type SiteConfig = typeof siteConfig;
 
 export const siteConfig = {
   name: "ShopEase",
   description: "Make beautiful websites regardless of your design experience.",
-  navItems: [
+  navItemsCustomer: [
     {
       label: "Profile",
-      icon: FaUser,
+      icon: MdPerson,
       href: "/user/profile",
     },
     {
+      label: "Order History",
+      icon: MdOutlineHistory,
+      href: "/user/order/order-history",
+    },
+    {
       label: "Cart",
-      icon: FaShoppingCart,
+      icon: MdShoppingCart,
       href: "/user/cart",
     },
     {
@@ -24,42 +34,32 @@ export const siteConfig = {
     },
     {
       label: "Compare",
-      icon: FaCodeCompare,
+      icon: MdOutlineCompare,
       href: "/compare",
     },
   ],
-  navMenuItems: [
-    {
-      label: "Profile",
-      href: "/profile",
-    },
+  navItemsAdmin: [
     {
       label: "Dashboard",
-      href: "/dashboard",
+      icon: MdDashboard,
+      href: "/admin/dashboard",
     },
     {
-      label: "Projects",
-      href: "/projects",
+      label: "Compare",
+      icon: MdOutlineCompare,
+      href: "/compare",
+    },
+  ],
+  navItemsVendor: [
+    {
+      label: "Dashboard",
+      icon: MdDashboard,
+      href: "/vendor/dashboard",
     },
     {
-      label: "Team",
-      href: "/team",
-    },
-    {
-      label: "Calendar",
-      href: "/calendar",
-    },
-    {
-      label: "Settings",
-      href: "/settings",
-    },
-    {
-      label: "Help & Feedback",
-      href: "/help-feedback",
-    },
-    {
-      label: "Logout",
-      href: "/logout",
+      label: "Compare",
+      icon: MdOutlineCompare,
+      href: "/compare",
     },
   ],
   links: {

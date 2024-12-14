@@ -25,12 +25,16 @@ export const usePostData = ({
     mutationFn: async ({ url, postData }) => await postService(url, postData),
     onSuccess: (data) => {
       if (data === "invalid signature") {
-        toast.error("Please login.");
+        if (!doNotShowNotification) {
+          toast.error("Please login.");
+        }
 
         return;
       }
       if (typeof data === "string") {
-        toast.error(data);
+        if (!doNotShowNotification) {
+          toast.error(data);
+        }
 
         return;
       }
@@ -64,12 +68,16 @@ export const useUpdateData = ({
     mutationFn: async ({ url, postData }) => await updateService(url, postData),
     onSuccess: (data) => {
       if (data === "invalid signature") {
-        toast.error("Please login.");
+        if (!doNotShowNotification) {
+          toast.error("Please login.");
+        }
 
         return;
       }
       if (typeof data === "string") {
-        toast.error(data);
+        if (!doNotShowNotification) {
+          toast.error(data);
+        }
 
         return;
       }

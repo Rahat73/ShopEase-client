@@ -7,6 +7,7 @@ import {
   Card,
   CardBody,
   CardHeader,
+  Divider,
   Modal,
   ModalBody,
   ModalContent,
@@ -17,6 +18,8 @@ import { useState } from "react";
 import { Link } from "@nextui-org/link";
 import { useRouter } from "next/navigation";
 import { FaMinus, FaPlus } from "react-icons/fa6";
+
+import ProductReviews from "./_component/product-reviews";
 
 import { useFetchData } from "@/src/hooks/fetch.hook";
 import { GET_ALL_PRODUCTS } from "@/src/api-endpoints/product.api";
@@ -224,68 +227,71 @@ const ProductDetailsPage = ({ params }: { params: { productId: string } }) => {
           </div>
         </div>
 
-        <div className="mt-10">
-          <h2 className="text-2xl font-bold mb-4">Additional Information</h2>
-          <p className="text-default-600">
-            This product is brought to you by our trusted vendor,{" "}
-            <strong>
-              <Link href={`/shop/${data.vendorId}`}>{vendor.shopName}</Link>
-            </strong>
-            , specializing in high-quality products,{" "}
-            {discount > 10 && `with a attractive discount of ${discount}%`}.{" "}
-            {inventoryCount < 100 &&
-              `Only ${inventoryCount} left in stock! So Hurry Up!`}
-          </p>
+        <Divider className="my-10" />
+
+        <div className="my-10 grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div>
+            <Card
+              isPressable
+              className="max-w-md mx-auto mt-10 p-2"
+              onPress={() => router.push(`/shop/${data.vendorId}`)}
+            >
+              <CardHeader className="justify-between space-x-10">
+                <div className="flex gap-5">
+                  <Avatar
+                    isBordered
+                    radius="full"
+                    size="md"
+                    src={vendor.shopLogo}
+                  />
+                  <div className="flex flex-col gap-1 items-start justify-center">
+                    <h4 className="text-small font-semibold leading-none text-default-600">
+                      {vendor.shopName}
+                    </h4>
+                    <h5 className="text-small tracking-tight text-default-400">
+                      Vendor
+                    </h5>
+                  </div>
+                </div>
+                <Button
+                  className="text-tiny"
+                  color={isVendorFollowed ? "default" : "primary"}
+                  radius="full"
+                  size="sm"
+                  variant="shadow"
+                  onPress={handleFollow}
+                >
+                  {isVendorFollowed ? "Unfollow" : "Follow"}
+                </Button>
+              </CardHeader>
+              <CardBody className="px-3 py-0 text-small text-default-500">
+                <p>Address: {vendor.address}</p>
+                <p>Phone: {vendor.phone}</p>
+              </CardBody>
+            </Card>
+
+            <div className="mt-10">
+              <h2 className="text-2xl font-bold mb-4">
+                Additional Information
+              </h2>
+              <p className="text-default-600">
+                This product is brought to you by our trusted vendor,{" "}
+                <strong>
+                  <Link href={`/shop/${data.vendorId}`}>{vendor.shopName}</Link>
+                </strong>
+                , specializing in high-quality products,{" "}
+                {discount > 10 && `with a attractive discount of ${discount}%`}.{" "}
+                {inventoryCount < 100 &&
+                  `Only ${inventoryCount} left in stock! So Hurry Up!`}
+              </p>
+            </div>
+          </div>
+          <div className="mt-10">
+            <h2 className="text-2xl font-bold mb-4">Reviews</h2>
+            <ProductReviews productId={data.id} />
+          </div>
         </div>
 
-        <Card
-          isPressable
-          className="max-w-md mx-auto mt-10 p-2"
-          onPress={() => router.push(`/shop/${data.vendorId}`)}
-        >
-          <CardHeader className="justify-between space-x-10">
-            <div className="flex gap-5">
-              <Avatar
-                isBordered
-                radius="full"
-                size="md"
-                src={vendor.shopLogo}
-              />
-              <div className="flex flex-col gap-1 items-start justify-center">
-                <h4 className="text-small font-semibold leading-none text-default-600">
-                  {vendor.shopName}
-                </h4>
-                <h5 className="text-small tracking-tight text-default-400">
-                  Vendor
-                </h5>
-              </div>
-            </div>
-            <Button
-              className="text-tiny"
-              color={isVendorFollowed ? "default" : "primary"}
-              radius="full"
-              size="sm"
-              variant="shadow"
-              onPress={handleFollow}
-            >
-              {isVendorFollowed ? "Unfollow" : "Follow"}
-            </Button>
-          </CardHeader>
-          <CardBody className="px-3 py-0 text-small text-default-500">
-            <p className="mb-2">Address: {vendor.address}</p>
-            <p>Phone: {vendor.phone}</p>
-          </CardBody>
-          {/* <CardFooter className="gap-3">
-          <div className="flex gap-1">
-            <p className="font-semibold text-default-500 text-small">4.8</p>
-            <p className=" text-default-500 text-small">Rating</p>
-          </div>
-          <div className="flex gap-1">
-            <p className="font-semibold text-default-500 text-small">24</p>
-            <p className="text-default-500 text-small">Reviews</p>
-          </div>
-        </CardFooter> */}
-        </Card>
         <div className="mt-10">
           <h2 className="text-2xl font-bold mb-4">Related Products</h2>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
@@ -297,6 +303,7 @@ const ProductDetailsPage = ({ params }: { params: { productId: string } }) => {
           </div>
         </div>
       </div>
+
       <Modal
         backdrop="blur"
         aria-labelledby="modal-title"

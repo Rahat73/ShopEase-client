@@ -196,8 +196,19 @@ export type Review = {
   comment?: string | null;
   createdAt: Date;
   updatedAt: Date;
+  orderId: string;
+  order: Order;
   productId: string;
   product: Product;
   customerId: string;
   customer: Customer;
+  reviewReply: ReviewReply;
+};
+
+export type ReviewReply = {
+  id: string;
+  content?: string;
+  createdAt: Date;
+  updatedAt: Date;
+  reviewId: string;
 };
