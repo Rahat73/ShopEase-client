@@ -87,7 +87,11 @@ const SignUp = () => {
     });
 
     if (res.success) {
-      router.push("/");
+      if (res.data.user.role === "VENDOR") {
+        router.push("/vendor/add-product");
+      } else {
+        router.push("/");
+      }
     }
     userLoading(true);
   };

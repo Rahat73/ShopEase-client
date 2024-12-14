@@ -112,7 +112,7 @@ const AdminDashboard = () => {
             <AppInput label="Name" name="name" />
           </div>
           <div className="my-3">
-            <AppInput label="phone" name="phone" />
+            <AppInput label="phone" name="phone" type="number" />
           </div>
           <div className="w-full flex justify-end">
             <Button

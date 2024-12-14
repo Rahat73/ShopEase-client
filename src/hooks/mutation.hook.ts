@@ -37,15 +37,15 @@ export const usePostData = ({
       if (data?.success) {
         queryClient.invalidateQueries({ queryKey: invalidateQueries });
         if (!doNotShowNotification) {
-          toast.success(data.message);
+          toast.success(data?.message);
         }
       } else if (!doNotShowNotification) {
-        toast.error(data.message);
+        toast.error(data?.message);
       }
     },
     onError: (error: any) => {
       if (!doNotShowNotification) {
-        toast.error(error.message);
+        toast.error(error?.message);
       }
     },
   });
@@ -76,15 +76,15 @@ export const useUpdateData = ({
       if (data?.success) {
         queryClient.invalidateQueries({ queryKey: invalidateQueries });
         if (!doNotShowNotification) {
-          toast.success(data.message);
+          toast.success(data?.message);
         }
       } else if (!doNotShowNotification) {
-        toast.error(data.message);
+        toast.error(data?.message);
       }
     },
     onError: (error: any) => {
       if (!doNotShowNotification) {
-        toast.error(error.message);
+        toast.error(error?.message);
       }
     },
   });
@@ -115,15 +115,15 @@ export const useDeleteData = ({
       if (data?.success) {
         queryClient.invalidateQueries({ queryKey: invalidateQueries });
         if (!doNotShowNotification) {
-          toast.success(data.message);
+          toast.success(data?.message);
         }
       } else if (!doNotShowNotification) {
-        toast.error(data.message);
+        toast.error(data?.message);
       }
     },
     onError: (error: any) => {
       if (!doNotShowNotification) {
-        toast.error(error.message);
+        toast.error(error?.message);
       }
     },
   });

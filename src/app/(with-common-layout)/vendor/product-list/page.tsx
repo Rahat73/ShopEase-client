@@ -13,7 +13,9 @@ import {
   Image,
 } from "@nextui-org/react";
 import { Key, useEffect, useState } from "react";
-import { FaEdit, FaTrash } from "react-icons/fa";
+
+import EditProduct from "./_components/edit-product";
+import DeleteProduct from "./_components/delete-product";
 
 import { GET_MY_PRODUCTS } from "@/src/api-endpoints/product.api";
 import { useFetchData } from "@/src/hooks/fetch.hook";
@@ -75,14 +77,10 @@ const renderCell = (product: Record<string, any>, columnKey: Key) => {
       return (
         <div className="flex items-center gap-4">
           <Tooltip content="Edit product">
-            <button className="text-blue-500 hover:text-blue-700">
-              <FaEdit size={18} />
-            </button>
+            <EditProduct product={product as Product} />
           </Tooltip>
           <Tooltip content="Delete product">
-            <button className="text-red-500 hover:text-red-700">
-              <FaTrash size={18} />
-            </button>
+            <DeleteProduct productId={product.id} />
           </Tooltip>
         </div>
       );

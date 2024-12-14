@@ -67,6 +67,9 @@ const VendorAddProduct = () => {
       url: ADD_PRODUCT,
       postData: formData,
     });
+
+    setImageFiles([]);
+    setImagePreviews([]);
   };
 
   return (
