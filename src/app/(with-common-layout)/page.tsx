@@ -2,10 +2,14 @@ import BannerSection from "./_components/banner-section";
 import CategoriesSection from "./_components/categories-section";
 import FlashSellSection from "./_components/flash-sell-section";
 import ProductsSection from "./_components/products-section";
+import JustForYou from "./_components/products-section/just-for-you";
 
+import { getCurrentUser } from "@/src/services/auth-service";
 import ScrollToTopBtn from "@/src/components/ui/scroll-top-btn";
 
-export default function Home() {
+export default async function Home() {
+  const user = await getCurrentUser();
+
   return (
     <div>
       <ScrollToTopBtn />
@@ -18,9 +22,15 @@ export default function Home() {
       <div className="mb-10">
         <CategoriesSection />
       </div>
-      <div className="mb-10">
-        <ProductsSection />
-      </div>
+      {user?.role === "CUSTOMER" ? (
+        <div className="mb-10">
+          <JustForYou />
+        </div>
+      ) : (
+        <div className="mb-10">
+          <ProductsSection />
+        </div>
+      )}
     </div>
   );
 }

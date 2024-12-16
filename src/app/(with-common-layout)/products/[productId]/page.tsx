@@ -22,7 +22,10 @@ import { FaMinus, FaPlus } from "react-icons/fa6";
 import ProductReviews from "./_component/product-reviews";
 
 import { useFetchData } from "@/src/hooks/fetch.hook";
-import { GET_ALL_PRODUCTS } from "@/src/api-endpoints/product.api";
+import {
+  GET_ALL_PRODUCTS,
+  GET_PRODUCT_VENDOR_PRIORITY,
+} from "@/src/api-endpoints/product.api";
 import Carousel from "@/src/components/carousel/carousel";
 import { usePostData } from "@/src/hooks/mutation.hook";
 import { ADD_TO_CART, GET_CART } from "@/src/api-endpoints/cart.api";
@@ -63,14 +66,10 @@ const ProductDetailsPage = ({ params }: { params: { productId: string } }) => {
   });
 
   const { data: followedVendors = [], isLoading: isFollowedLoading } =
-    useFetchData(
-      `${GET_FOLLOWED_VENDORS}`,
-      undefined,
-      () => !!params.productId
-    );
+    useFetchData(GET_FOLLOWED_VENDORS, undefined, () => !!params.productId);
 
   const { mutate } = usePostData({
-    invalidateQueries: [GET_FOLLOWED_VENDORS],
+    invalidateQueries: [GET_FOLLOWED_VENDORS, GET_PRODUCT_VENDOR_PRIORITY],
   });
 
   if (

@@ -6,11 +6,11 @@ import { useEffect, useState } from "react";
 
 import ProductCard from "../../../../components/ui/product-card";
 
-import { GET_ALL_PRODUCTS } from "@/src/api-endpoints/product.api";
+import { GET_PRODUCT_VENDOR_PRIORITY } from "@/src/api-endpoints/product.api";
 import { useFetchData } from "@/src/hooks/fetch.hook";
 import { Product } from "@/src/types";
 
-const ProductsSection = () => {
+const JustForYou = () => {
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   const [products, setProducts] = useState<Product[]>([]);
@@ -20,7 +20,7 @@ const ProductsSection = () => {
     data = [],
     meta,
     isFetching,
-  } = useFetchData(GET_ALL_PRODUCTS, {
+  } = useFetchData(GET_PRODUCT_VENDOR_PRIORITY, {
     page,
     limit,
   });
@@ -54,7 +54,7 @@ const ProductsSection = () => {
 
   return (
     <div className="p-5 bg-default-100 rounded-lg shadow-lg">
-      <p className="text-2xl font-bold ">Products</p>
+      <p className="text-2xl font-bold ">Just For You</p>
       <Divider className="my-4" />
 
       {isFetching && products.length === 0 ? (
@@ -87,4 +87,4 @@ const ProductsSection = () => {
   );
 };
 
-export default ProductsSection;
+export default JustForYou;

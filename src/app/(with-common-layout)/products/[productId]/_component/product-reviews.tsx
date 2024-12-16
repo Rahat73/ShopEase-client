@@ -38,18 +38,16 @@ const ProductReviews = ({ productId }: { productId: string }) => {
     <div className="space-y-6">
       {reviews.map((review) => (
         <Card key={review.id} className="w-full">
-          <CardBody className="p-6">
+          <CardBody className="p-3">
             <div className="flex items-start space-x-4">
               <Avatar
                 src={review.customer.profilePhoto || noImg}
                 alt={review.customer.name}
-                className="w-12 h-12"
+                className="w-8 h-8"
               />
               <div className="flex-grow">
                 <div className="flex justify-between items-center mb-2">
-                  <h3 className="text-lg font-semibold">
-                    {review.customer.name}
-                  </h3>
+                  <h3 className="font-semibold">{review.customer.name}</h3>
                   <div className="flex items-center">
                     {/* @ts-expect-error there is a version miss-match in the source */}
                     <Rating
@@ -57,35 +55,35 @@ const ProductReviews = ({ productId }: { productId: string }) => {
                       initialRating={review.rating}
                       fractions={10}
                       emptySymbol={
-                        <FaRegStar className="text-green-600 text-2xl" />
+                        <FaRegStar className="text-green-600 text-lg" />
                       }
-                      fullSymbol={
-                        <FaStar className="text-green-600 text-2xl" />
-                      }
+                      fullSymbol={<FaStar className="text-green-600 text-lg" />}
                     />
                   </div>
                 </div>
-                <p className="text-sm text-default-500 mb-2 flex items-center">
+                <p className="text-tiny text-default-500 mb-2 flex items-center">
                   <FaCalendarAlt className="mr-2" />
                   {format(new Date(review.createdAt), "MMMM d, yyyy")}
                 </p>
-                <p className="mb-4 flex items-start">
+                <p className="mb-2 flex items-start">
                   <FaComment className="mr-2 mt-1 flex-shrink-0" />
                   {review.comment}
                 </p>
                 {review.reviewReply && (
-                  <div className="bg-default-100 p-4 rounded-lg">
-                    <p className="text-sm font-semibold mb-2 flex items-center">
-                      <FaReply className="mr-2" />
-                      Vendor&apos;s Reply
-                    </p>
+                  <div className="bg-default-100 p-2 rounded-lg">
+                    <div className="flex justify-between">
+                      <p className="text-sm font-semibold mb-2 flex items-center">
+                        <FaReply className="mr-2" />
+                        Vendor&apos;s Reply
+                      </p>
+                      <p className="text-xs text-default-500">
+                        {format(
+                          new Date(review.reviewReply.createdAt),
+                          "MMMM d, yyyy"
+                        )}
+                      </p>
+                    </div>
                     <p className="text-sm">{review.reviewReply?.content}</p>
-                    <p className="text-xs text-default-500 mt-2">
-                      {format(
-                        new Date(review.reviewReply.createdAt),
-                        "MMMM d, yyyy 'at' h:mm a"
-                      )}
-                    </p>
                   </div>
                 )}
               </div>

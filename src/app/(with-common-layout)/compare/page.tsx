@@ -15,6 +15,7 @@ import {
 import { useEffect, useState } from "react";
 import { MdClear } from "react-icons/md";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 import { SearchIcon } from "@/src/components/icons";
 import { Product } from "@/src/types";
@@ -29,6 +30,7 @@ const ComparePage = () => {
   const [selectedProductFirst, setSelectedProductFirst] = useState<Product>();
   const [selectedProductSecond, setSelectedProductSecond] = useState<Product>();
   const [selectedProductThird, setSelectedProductThird] = useState<Product>();
+  const [selectedProductCategory, setSelectedProductCategory] = useState("");
 
   const [searchTerm, setSearchTerm] = useState("");
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
@@ -60,11 +62,23 @@ const ComparePage = () => {
   };
 
   const handleProductSelection = (product: Product) => {
+    if (
+      selectedProductCategory &&
+      selectedProductCategory !== product.category.name
+    ) {
+      toast.error("Please select a product from the same category.");
+
+      return;
+    }
+
     if (selected === "first") {
+      setSelectedProductCategory(product.category.name);
       setSelectedProductFirst(product);
     } else if (selected === "second") {
+      setSelectedProductCategory(product.category.name);
       setSelectedProductSecond(product);
     } else {
+      setSelectedProductCategory(product.category.name);
       setSelectedProductThird(product);
     }
 
@@ -75,18 +89,26 @@ const ComparePage = () => {
     <div className="py-5">
       <div className="text-xl font-bold space-x-4 flex justify-between items-center">
         <p>Compare Products</p>
-        <Button
-          color="danger"
-          variant="flat"
-          startContent={<MdClear />}
-          onPress={() => {
-            setSelectedProductFirst(undefined);
-            setSelectedProductSecond(undefined);
-            setSelectedProductThird(undefined);
-          }}
-        >
-          Clear
-        </Button>
+        <div className="flex items-center gap-5">
+          {selectedProductCategory && (
+            <p className="text-base font-medium">
+              Category: {selectedProductCategory}
+            </p>
+          )}
+          <Button
+            color="danger"
+            variant="flat"
+            startContent={<MdClear />}
+            onPress={() => {
+              setSelectedProductFirst(undefined);
+              setSelectedProductSecond(undefined);
+              setSelectedProductThird(undefined);
+              setSelectedProductCategory("");
+            }}
+          >
+            Clear
+          </Button>
+        </div>
       </div>
       <Divider className="my-4" />
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10">
@@ -270,12 +292,19 @@ const ComparePage = () => {
           )}
         </div>
       </div>
-      <Modal isOpen={isOpen} className="h-96" onOpenChange={onOpenChange}>
+      <Modal
+        isOpen={isOpen}
+        className="h-96"
+        classNames={{
+          closeButton: "right-2 top-2",
+        }}
+        onOpenChange={onOpenChange}
+      >
         <ModalContent>
           {() => (
             <>
               <ModalHeader className="flex flex-col gap-1">
-                Select a product {selected}
+                Select a product
               </ModalHeader>
               <ModalBody>
                 <Autocomplete
@@ -295,23 +324,28 @@ const ComparePage = () => {
                       textValue={product.name}
                       onPress={() => handleProductSelection(product)}
                     >
-                      <div className="flex gap-5 items-center">
-                        <Image
-                          src={product.images?.[0] || noImg}
-                          alt={product.name}
-                          width={50}
-                          height={50}
-                        />
-                        <div>
-                          <p>{product.name}</p>
-                          <p className="text-green-600">
-                            {(
-                              product.price -
-                              product.price * (product.discount / 100)
-                            ).toFixed(2)}
-                            $
-                          </p>
+                      <div className="flex justify-between items-center">
+                        <div className="flex gap-5 items-center">
+                          <Image
+                            src={product.images?.[0] || noImg}
+                            alt={product.name}
+                            width={50}
+                            height={50}
+                          />
+                          <div>
+                            <p>{product.name}</p>
+                            <p className="text-green-600">
+                              {(
+                                product.price -
+                                product.price * (product.discount / 100)
+                              ).toFixed(2)}
+                              $
+                            </p>
+                          </div>
                         </div>
+                        <p className="text-default-500">
+                          {product.category.name}
+                        </p>
                       </div>
                     </AutocompleteItem>
                   )}

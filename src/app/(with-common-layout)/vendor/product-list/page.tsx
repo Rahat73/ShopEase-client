@@ -16,6 +16,7 @@ import { Key, useEffect, useState } from "react";
 
 import EditProduct from "./_components/edit-product";
 import DeleteProduct from "./_components/delete-product";
+import DuplicateProduct from "./_components/duplicate-product";
 
 import { GET_MY_PRODUCTS } from "@/src/api-endpoints/product.api";
 import { useFetchData } from "@/src/hooks/fetch.hook";
@@ -75,9 +76,12 @@ const renderCell = (product: Record<string, any>, columnKey: Key) => {
       return <span>{product.category.name}</span>;
     case "actions":
       return (
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2">
           <Tooltip content="Edit product">
             <EditProduct product={product as Product} />
+          </Tooltip>
+          <Tooltip content="Duplicate product">
+            <DuplicateProduct productId={product.id} />
           </Tooltip>
           <Tooltip content="Delete product">
             <DeleteProduct productId={product.id} />

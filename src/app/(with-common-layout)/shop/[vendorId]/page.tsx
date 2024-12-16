@@ -9,9 +9,12 @@ import {
   Divider,
   Skeleton,
 } from "@nextui-org/react";
-import { FaHeart, FaMapPin, FaPhone } from "react-icons/fa6";
+import { FaHeart, FaMapPin, FaPeopleGroup, FaPhone } from "react-icons/fa6";
 
-import { GET_ALL_PRODUCTS } from "@/src/api-endpoints/product.api";
+import {
+  GET_ALL_PRODUCTS,
+  GET_PRODUCT_VENDOR_PRIORITY,
+} from "@/src/api-endpoints/product.api";
 import { GET_VENDORS } from "@/src/api-endpoints/user.api";
 import { useFetchData } from "@/src/hooks/fetch.hook";
 import { noImg } from "@/src/constants";
@@ -25,11 +28,11 @@ import {
 
 const ShopPage = ({ params }: { params: { vendorId: string } }) => {
   const { vendorId } = params;
-  const { data: vendorData, isLoading: isVendorLoading } = useFetchData(
-    `${GET_VENDORS}/${vendorId}`,
-    undefined,
-    () => !!vendorId
-  );
+  const {
+    data: vendorData,
+    isLoading: isVendorLoading,
+    refetch,
+  } = useFetchData(`${GET_VENDORS}/${vendorId}`, undefined, () => !!vendorId);
 
   const { data: productData, isLoading: isProductLoading } = useFetchData(
     GET_ALL_PRODUCTS,
@@ -38,23 +41,31 @@ const ShopPage = ({ params }: { params: { vendorId: string } }) => {
   );
 
   const { data: followedVendors = [], isLoading: isFollowedLoading } =
-    useFetchData(`${GET_FOLLOWED_VENDORS}`, undefined, () => !!vendorId);
+    useFetchData(GET_FOLLOWED_VENDORS, undefined, () => !!vendorId);
 
-  const { mutate } = usePostData({
-    invalidateQueries: [GET_FOLLOWED_VENDORS],
+  const { mutateAsync, isPending } = usePostData({
+    invalidateQueries: [
+      GET_FOLLOWED_VENDORS,
+      `${GET_VENDORS}/${vendorId}`,
+      GET_PRODUCT_VENDOR_PRIORITY,
+    ],
   });
 
-  const handleFollow = () => {
-    mutate({
+  const handleFollow = async () => {
+    const res = await mutateAsync({
       url: `${FOLLOW_VENDOR}/${vendorId}`,
     });
+
+    if (res?.success) {
+      refetch();
+    }
   };
 
   const isVendorFollowed = followedVendors.find(
     (item: any) => item.vendorId === vendorId
   );
 
-  if (isVendorLoading || isProductLoading) {
+  if (isVendorLoading || isProductLoading || isFollowedLoading) {
     return (
       <div className="container mx-auto px-4 py-8">
         <Skeleton className="rounded-lg">
@@ -93,6 +104,7 @@ const ShopPage = ({ params }: { params: { vendorId: string } }) => {
             variant="shadow"
             className="mt-4 sm:mt-0"
             startContent={<FaHeart size={18} />}
+            isLoading={isPending}
             onPress={handleFollow}
           >
             {isVendorFollowed ? "Unfollow" : "Follow"}
@@ -102,6 +114,10 @@ const ShopPage = ({ params }: { params: { vendorId: string } }) => {
           <div className="flex items-center gap-2 mb-2 sm:mb-0">
             <FaMapPin size={18} />
             <p>{vendorData.address}</p>
+          </div>
+          <div className="flex items-center gap-2 mb-2 sm:mb-0">
+            <FaPeopleGroup size={18} />
+            <p>Followers: {vendorData.follow.length}</p>
           </div>
           <div className="flex items-center gap-2">
             <FaPhone size={18} />

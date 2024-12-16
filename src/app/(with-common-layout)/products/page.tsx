@@ -13,8 +13,6 @@ import {
   SelectItem,
   useDisclosure,
 } from "@nextui-org/react";
-import Rating from "react-rating";
-import { FaRegStar, FaStar } from "react-icons/fa";
 import { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Button } from "@nextui-org/button";
@@ -26,7 +24,6 @@ import { Category, Product } from "@/src/types";
 import { GET_ALL_CATEGORIES } from "@/src/api-endpoints/category.api";
 
 const AllProducts = () => {
-  const [rating, setRating] = useState(0);
   const [sortBy, setSortBy] = useState("");
   const [sortOrder, setSortOrder] = useState("");
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -138,17 +135,6 @@ const AllProducts = () => {
               </div>
             </div>
             <Divider className="my-2" />
-            <div>
-              <p className="text-lg ">Rating</p>
-              {/* @ts-expect-error there is a version miss-match in the source */}
-              <Rating
-                initialRating={0}
-                fractions={10}
-                emptySymbol={<FaRegStar className="text-green-600 text-2xl" />}
-                fullSymbol={<FaStar className="text-green-600 text-2xl" />}
-                onChange={setRating}
-              />
-            </div>
           </div>
           <div className="bg-default-100 rounded-lg shadow-lg p-5 col-span-10 md:col-span-8 ">
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
@@ -252,21 +238,6 @@ const AllProducts = () => {
                     </div>
                   </div>
                   <Divider className="my-2" />
-                  <div>
-                    <p className="text-lg ">Rating</p>
-                    {/* @ts-expect-error there is a version miss-match in the source */}
-                    <Rating
-                      initialRating={0}
-                      fractions={10}
-                      emptySymbol={
-                        <FaRegStar className="text-green-600 text-2xl" />
-                      }
-                      fullSymbol={
-                        <FaStar className="text-green-600 text-2xl" />
-                      }
-                      onChange={setRating}
-                    />
-                  </div>
                 </div>
               </DrawerBody>
             </>

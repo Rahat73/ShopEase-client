@@ -98,7 +98,7 @@ const SignUp = () => {
 
   return (
     <div>
-      <div className="flex w-full h-full flex-col items-center justify-center">
+      <div className="flex w-full min-h-screen py-5 flex-col items-center justify-center">
         <h3 className="my-2 text-2xl font-bold">Sign up with ShopEase</h3>
         <p className="mb-4">Let&lsquo;s Get You Signed Up !</p>
         <div className="w-10/12 md:w-[35%]">

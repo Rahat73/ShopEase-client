@@ -75,7 +75,7 @@ const UpdateCategory = ({ category }: { category: Category }) => {
   return (
     <>
       <Button isIconOnly aria-label="Edit" variant="light" onPress={onOpen}>
-        <FaEdit />
+        <FaEdit size={18} className="text-blue-500 hover:text-blue-700" />
       </Button>
       <Modal
         isOpen={isOpen}

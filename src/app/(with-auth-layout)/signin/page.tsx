@@ -42,8 +42,8 @@ const SignIn = () => {
   };
 
   return (
-    <div className="flex w-full h-full flex-col items-center justify-center">
-      <h3 className="my-2 text-2xl font-bold">Login with Purrfect Care</h3>
+    <div className="flex w-full min-h-screen py-5 flex-col items-center justify-center">
+      <h3 className="my-2 text-2xl font-bold">Login with ShopEase</h3>
       <p className="mb-4">Welcome Back! Let&lsquo;s Get Started</p>
       <div className="w-10/12 md:w-[35%]">
         <AppForm

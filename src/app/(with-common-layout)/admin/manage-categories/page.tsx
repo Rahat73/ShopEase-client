@@ -14,6 +14,7 @@ import { Divider } from "@nextui-org/react";
 
 import AddCategory from "./_components/add-category";
 import UpdateCategory from "./_components/update-category";
+import DeleteCategories from "./_components/delete-categories";
 
 import { GET_ALL_CATEGORIES } from "@/src/api-endpoints/category.api";
 import { useFetchData } from "@/src/hooks/fetch.hook";
@@ -36,6 +37,10 @@ const columns = [
   {
     key: "edit",
     label: "Edit",
+  },
+  {
+    key: "delete",
+    label: "Delete",
   },
 ];
 
@@ -72,6 +77,8 @@ const AdminManageCategories = () => {
                     />
                   ) : columnKey === "edit" ? (
                     <UpdateCategory category={item} />
+                  ) : columnKey === "delete" ? (
+                    <DeleteCategories categoryId={item.id} />
                   ) : (
                     getKeyValue(item, columnKey)
                   )}

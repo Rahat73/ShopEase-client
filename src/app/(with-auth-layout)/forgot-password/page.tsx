@@ -81,10 +81,10 @@ const ForgotPassword = () => {
   }, [resetSuccess]);
 
   return (
-    <div className="flex h-[calc(100vh-200px)] w-full flex-col items-center justify-center">
+    <div className="flex min-h-screen py-5 w-full flex-col items-center justify-center">
       {userId && token ? (
         <>
-          <h3 className="my-2 text-2xl font-bold">Purrfect Care</h3>
+          <h3 className="my-2 text-2xl font-bold">ShopEase</h3>
           <p className="mb-4">Enter your new password</p>
           <div className="w-10/12 md:w-[35%]">
             <AppForm
@@ -143,7 +143,7 @@ const ForgotPassword = () => {
               </Button>
             </AppForm>
             <div className="text-center text-primary-500 my-2">
-              <Link href="/login">Back to Login ?</Link>
+              <Link href="/signin">Back to Login ?</Link>
             </div>
             {forgotSuccess && (
               <p className="text-center font-bold text-default">
