@@ -16,6 +16,7 @@ import { useFetchData } from "@/src/hooks/fetch.hook";
 import { TVendor } from "@/src/types";
 import { noImg } from "@/src/constants";
 import { useUpdateData } from "@/src/hooks/mutation.hook";
+import AppLoading from "@/src/components/ui/loading-contents/app-loading";
 
 const columns = [
   {
@@ -45,8 +46,9 @@ const columns = [
 ];
 
 const VendorList = () => {
-  const { data: vendorsData = [] } = useFetchData(GET_VENDORS) as {
+  const { data: vendorsData = [], isLoading } = useFetchData(GET_VENDORS) as {
     data: TVendor[];
+    isLoading: boolean;
   };
 
   const { mutate: updateVendor } = useUpdateData({
@@ -73,7 +75,12 @@ const VendorList = () => {
       <TableHeader columns={columns}>
         {(column) => <TableColumn key={column.key}>{column.label}</TableColumn>}
       </TableHeader>
-      <TableBody items={vendorsData} emptyContent={"No rows to display."}>
+      <TableBody
+        items={vendorsData}
+        emptyContent={"No rows to display."}
+        isLoading={isLoading}
+        loadingContent={<AppLoading />}
+      >
         {(item: TVendor) => (
           <TableRow key={item.id}>
             {(columnKey) => (

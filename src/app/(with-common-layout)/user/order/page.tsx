@@ -63,7 +63,7 @@ const OrderPage = ({
       },
     });
 
-    if (res.success) {
+    if (res?.success) {
       router.push("/user/payment?orderId=" + res.data.id);
     }
   };

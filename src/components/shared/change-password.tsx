@@ -21,7 +21,7 @@ import { changePasswordValidationSchema } from "@/src/schemas/auth.schema";
 const ChangePassword = () => {
   const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure();
 
-  const { mutateAsync: changePassword } = useUpdateData({
+  const { mutateAsync: changePassword, isPending } = useUpdateData({
     invalidateQueries: [],
   });
 
@@ -82,7 +82,7 @@ const ChangePassword = () => {
                 <Button color="default" onPress={onClose}>
                   Cancel
                 </Button>
-                <Button color="danger" type="submit">
+                <Button color="danger" type="submit" isLoading={isPending}>
                   Confirm
                 </Button>
               </div>

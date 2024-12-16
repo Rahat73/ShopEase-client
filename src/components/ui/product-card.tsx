@@ -47,7 +47,7 @@ const ProductCard = ({ product }: { product: Product }) => {
     () => !!product.id
   );
 
-  const { mutate: addToCartMutation } = usePostData({
+  const { mutate: addToCartMutation, isPending } = usePostData({
     invalidateQueries: [GET_CART],
   });
 
@@ -106,13 +106,21 @@ const ProductCard = ({ product }: { product: Product }) => {
             {(product.price - product.price * (product.discount / 100)).toFixed(
               2
             )}
-            <span className="bg-red-600 px-1 text-white rounded ml-2 text-sm">
-              {product.discount}%
-            </span>
+            <div className="text-default-400 space-x-2 text-tiny">
+              <span className="line-through">${product.price.toFixed(2)}</span>
+              <span className="bg-red-600 px-1 text-white rounded">
+                {product.discount}%
+              </span>
+            </div>
           </div>
         </div>
         <CardFooter className="text-small flex-col justify-start">
-          <Button isDisabled={cartLoading} size="sm" onPress={handleAddToCart}>
+          <Button
+            isDisabled={cartLoading}
+            size="sm"
+            isLoading={isPending}
+            onPress={handleAddToCart}
+          >
             Add to Cart
           </Button>
         </CardFooter>

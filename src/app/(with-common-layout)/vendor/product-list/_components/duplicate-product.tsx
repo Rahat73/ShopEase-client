@@ -17,13 +17,19 @@ import {
 const DuplicateProduct = ({ productId }: { productId: string }) => {
   const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure();
 
-  const { mutate: duplicateProduct } = usePostData({
+  const { mutateAsync: duplicateProduct, isPending } = usePostData({
     invalidateQueries: [GET_MY_PRODUCTS],
   });
 
-  const handleDelete = () => {
-    duplicateProduct({ url: DUPLICATE_PRODUCT, postData: { productId } });
-    onClose();
+  const handleDelete = async () => {
+    const res = await duplicateProduct({
+      url: DUPLICATE_PRODUCT,
+      postData: { productId },
+    });
+
+    if (res?.success) {
+      onClose();
+    }
   };
 
   return (
@@ -52,7 +58,11 @@ const DuplicateProduct = ({ productId }: { productId: string }) => {
             <Button color="default" onPress={onClose}>
               Cancel
             </Button>
-            <Button color="warning" onPress={handleDelete}>
+            <Button
+              color="warning"
+              isLoading={isPending}
+              onPress={handleDelete}
+            >
               Duplicate
             </Button>
           </ModalFooter>

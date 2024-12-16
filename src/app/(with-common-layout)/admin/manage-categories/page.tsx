@@ -20,6 +20,7 @@ import { GET_ALL_CATEGORIES } from "@/src/api-endpoints/category.api";
 import { useFetchData } from "@/src/hooks/fetch.hook";
 import { Category } from "@/src/types";
 import { noImg } from "@/src/constants";
+import AppLoading from "@/src/components/ui/loading-contents/app-loading";
 
 const columns = [
   {
@@ -45,8 +46,11 @@ const columns = [
 ];
 
 const AdminManageCategories = () => {
-  const { data: categories = [] } = useFetchData(GET_ALL_CATEGORIES) as {
+  const { data: categories = [], isLoading } = useFetchData(
+    GET_ALL_CATEGORIES
+  ) as {
     data: Category[];
+    isLoading: boolean;
   };
 
   return (
@@ -62,7 +66,12 @@ const AdminManageCategories = () => {
             <TableColumn key={column.key}>{column.label}</TableColumn>
           )}
         </TableHeader>
-        <TableBody items={categories} emptyContent={"No rows to display."}>
+        <TableBody
+          items={categories}
+          emptyContent={"No rows to display."}
+          isLoading={isLoading}
+          loadingContent={<AppLoading />}
+        >
           {(item: Category) => (
             <TableRow key={item.id}>
               {(columnKey) => (

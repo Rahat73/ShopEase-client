@@ -18,13 +18,16 @@ import { useDeleteData } from "@/src/hooks/mutation.hook";
 const DeleteProduct = ({ productId }: { productId: string }) => {
   const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure();
 
-  const { mutate: deleteProduct } = useDeleteData({
+  const { mutateAsync: deleteProduct, isPending } = useDeleteData({
     invalidateQueries: [GET_MY_PRODUCTS],
   });
 
-  const handleDelete = () => {
-    deleteProduct({ url: `${DELETE_PRODUCT}/${productId}` });
-    onClose();
+  const handleDelete = async () => {
+    const res = await deleteProduct({ url: `${DELETE_PRODUCT}/${productId}` });
+
+    if (res?.success) {
+      onClose();
+    }
   };
 
   return (
@@ -50,7 +53,7 @@ const DeleteProduct = ({ productId }: { productId: string }) => {
             <Button color="default" onPress={onClose}>
               Cancel
             </Button>
-            <Button color="danger" onPress={handleDelete}>
+            <Button color="danger" isLoading={isPending} onPress={handleDelete}>
               Delete
             </Button>
           </ModalFooter>

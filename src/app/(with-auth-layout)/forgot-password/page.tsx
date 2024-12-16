@@ -36,7 +36,7 @@ const ForgotPassword = () => {
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     const res = await handleForgotPassword(data);
 
-    if (!res.success) {
+    if (!res?.success) {
       setForgotSuccess(false);
 
       return;

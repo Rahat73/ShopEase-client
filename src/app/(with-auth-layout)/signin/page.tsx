@@ -27,7 +27,7 @@ const SignIn = () => {
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     const res = await handleUserLogin(data);
 
-    if (res.success) {
+    if (res?.success) {
       if (res.data.user.role === "VENDOR") {
         router.push("/vendor/dashboard");
       } else if (res.data.user.role === "ADMIN") {

@@ -22,7 +22,7 @@ import { GET_MY_PRODUCTS } from "@/src/api-endpoints/product.api";
 import { useFetchData } from "@/src/hooks/fetch.hook";
 import { noImg } from "@/src/constants";
 import { Product } from "@/src/types";
-import AppSpinner from "@/src/components/ui/loading-contents/app-spinner";
+import AppLoading from "@/src/components/ui/loading-contents/app-loading";
 
 const columns = [
   { name: "IMAGE", uid: "image" },
@@ -125,6 +125,7 @@ const VendorProductListPage = () => {
               isCompact
               showControls
               showShadow
+              hidden={products.length === 0}
               color="primary"
               page={page}
               total={totalPages}
@@ -145,8 +146,9 @@ const VendorProductListPage = () => {
         </TableHeader>
         <TableBody
           items={products}
+          emptyContent={"No rows to display."}
           isLoading={isLoading}
-          loadingContent={<AppSpinner />}
+          loadingContent={<AppLoading />}
         >
           {(item: Product) => (
             <TableRow key={item.id}>

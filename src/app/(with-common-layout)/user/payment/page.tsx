@@ -37,7 +37,7 @@ const PaymentPage = ({
       },
     });
 
-    if (res.success) {
+    if (res?.success) {
       window.location.href = res.data.payment_url;
     }
   };

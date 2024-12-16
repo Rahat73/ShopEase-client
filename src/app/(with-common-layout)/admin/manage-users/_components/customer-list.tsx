@@ -16,6 +16,7 @@ import { useFetchData } from "@/src/hooks/fetch.hook";
 import { useUpdateData } from "@/src/hooks/mutation.hook";
 import { Customer } from "@/src/types";
 import { noImg } from "@/src/constants";
+import AppLoading from "@/src/components/ui/loading-contents/app-loading";
 
 const columns = [
   {
@@ -41,8 +42,11 @@ const columns = [
 ];
 
 const CustomerList = () => {
-  const { data: customersData = [] } = useFetchData(GET_CUSTOMERS) as {
+  const { data: customersData = [], isLoading } = useFetchData(
+    GET_CUSTOMERS
+  ) as {
     data: Customer[];
+    isLoading: boolean;
   };
 
   const { mutate: updateCustomer } = useUpdateData({
@@ -60,7 +64,12 @@ const CustomerList = () => {
       <TableHeader columns={columns}>
         {(column) => <TableColumn key={column.key}>{column.label}</TableColumn>}
       </TableHeader>
-      <TableBody items={customersData} emptyContent={"No rows to display."}>
+      <TableBody
+        items={customersData}
+        emptyContent={"No rows to display."}
+        isLoading={isLoading}
+        loadingContent={<AppLoading />}
+      >
         {(item: Customer) => (
           <TableRow key={item.id}>
             {(columnKey) => (

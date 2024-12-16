@@ -18,7 +18,7 @@ import { useState, useEffect, Key } from "react";
 import { GET_ORDERS } from "@/src/api-endpoints/order.api";
 import { useFetchData } from "@/src/hooks/fetch.hook";
 import { Order } from "@/src/types";
-import AppSpinner from "@/src/components/ui/loading-contents/app-spinner";
+import AppLoading from "@/src/components/ui/loading-contents/app-loading";
 
 const statusColorMap = {
   PENDING: "warning",
@@ -142,6 +142,7 @@ const AdminOrderHistory = () => {
               isCompact
               showControls
               showShadow
+              hidden={ordersData.length === 0}
               color="secondary"
               page={page}
               total={totalPages}
@@ -160,7 +161,11 @@ const AdminOrderHistory = () => {
             </TableColumn>
           ))}
         </TableHeader>
-        <TableBody isLoading={isLoading} loadingContent={<AppSpinner />}>
+        <TableBody
+          isLoading={isLoading}
+          loadingContent={<AppLoading />}
+          emptyContent={"No rows to display."}
+        >
           {ordersData.map((order: Order) => (
             <TableRow key={order.id}>
               {(columnKey) => (

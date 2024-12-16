@@ -22,6 +22,7 @@ import { TVendor } from "@/src/types";
 import { updateVendorValidationSchema } from "@/src/schemas/user.schema";
 import AppTextarea from "@/src/components/form/app-textarea";
 import ChangePassword from "@/src/components/shared/change-password";
+import AppLoading from "@/src/components/ui/loading-contents/app-loading";
 
 const VendorDashboard = () => {
   const [imageFiles, setImageFiles] = useState<File | undefined>();
@@ -71,74 +72,74 @@ const VendorDashboard = () => {
     }
   };
 
-  if (isLoading) {
-    return <>Loading</>;
-  }
-
   return (
     <div className="my-1">
       <div className="text-xl font-bold space-x-4 flex justify-between items-center">
         <p>Dashboard</p>
       </div>
       <Divider className="my-4" />
-      <div className="max-w-xs mx-auto my-10 relative">
-        <div className="flex justify-center">
-          <label htmlFor="image" className="cursor-pointer">
-            <Avatar
-              isBordered
-              className="w-24 h-24"
-              src={imagePreviews || data?.shopLogo || noImg}
-              alt="avatar"
+      {isLoading ? (
+        <AppLoading />
+      ) : (
+        <div className="max-w-xs mx-auto my-10 relative">
+          <div className="flex justify-center">
+            <label htmlFor="image" className="cursor-pointer">
+              <Avatar
+                isBordered
+                className="w-24 h-24"
+                src={imagePreviews || data?.shopLogo || noImg}
+                alt="avatar"
+              />
+            </label>
+            <input
+              className="hidden"
+              id="image"
+              type="file"
+              accept="image/*"
+              onChange={(e) => handleImageChange(e)}
             />
-          </label>
-          <input
-            className="hidden"
-            id="image"
-            type="file"
-            accept="image/*"
-            onChange={(e) => handleImageChange(e)}
-          />
+          </div>
+          <div className="my-3">
+            <Input
+              readOnly
+              label="email"
+              name="Email"
+              defaultValue={data.email}
+            />
+          </div>
+          <AppForm
+            resolver={zodResolver(updateVendorValidationSchema)}
+            defaultValues={data}
+            reset={false}
+            onSubmit={handleUpdateProfile}
+          >
+            <div className="my-3">
+              <AppInput label="Shop Name" name="shopName" />
+            </div>
+            <div className="my-3">
+              <AppTextarea label="Description" name="shopDescription" />
+            </div>
+            <div className="my-3">
+              <AppInput label="Phone" name="phone" type="number" />
+            </div>
+            <div className="my-3">
+              <AppTextarea label="Address" name="address" />
+            </div>
+            <div className="w-full flex justify-between">
+              <Button
+                type="submit"
+                color="primary"
+                isDisabled={isLoading}
+                isLoading={isPending}
+                startContent={<FaEdit />}
+              >
+                Update
+              </Button>
+            </div>
+          </AppForm>
+          <ChangePassword />
         </div>
-        <div className="my-3">
-          <Input
-            readOnly
-            label="email"
-            name="Email"
-            defaultValue={data.email}
-          />
-        </div>
-        <AppForm
-          resolver={zodResolver(updateVendorValidationSchema)}
-          defaultValues={data}
-          reset={false}
-          onSubmit={handleUpdateProfile}
-        >
-          <div className="my-3">
-            <AppInput label="Shop Name" name="shopName" />
-          </div>
-          <div className="my-3">
-            <AppTextarea label="Description" name="shopDescription" />
-          </div>
-          <div className="my-3">
-            <AppInput label="Phone" name="phone" type="number" />
-          </div>
-          <div className="my-3">
-            <AppTextarea label="Address" name="address" />
-          </div>
-          <div className="w-full flex justify-between">
-            <Button
-              type="submit"
-              color="primary"
-              isDisabled={isLoading}
-              isLoading={isPending}
-              startContent={<FaEdit />}
-            >
-              Update
-            </Button>
-          </div>
-        </AppForm>
-        <ChangePassword />
-      </div>
+      )}
     </div>
   );
 };

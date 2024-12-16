@@ -53,7 +53,7 @@ const Carousel: React.FC<PropType> = (props) => {
                 width={500}
                 height={500}
                 className="object-cover"
-                alt="Your alt text"
+                alt="Prodcut Image"
               />
             </div>
           ))}

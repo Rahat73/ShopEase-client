@@ -32,7 +32,7 @@ const SearchBar = () => {
     };
   }, [searchTerm]);
 
-  const { data = [] } = useFetchData(
+  const { data = [], isFetching } = useFetchData(
     GET_ALL_PRODUCTS,
     {
       searchTerm: debouncedSearchTerm,
@@ -45,6 +45,7 @@ const SearchBar = () => {
       <Autocomplete
         fullWidth
         isClearable
+        isLoading={isFetching}
         size="lg"
         defaultItems={data}
         placeholder="Search..."

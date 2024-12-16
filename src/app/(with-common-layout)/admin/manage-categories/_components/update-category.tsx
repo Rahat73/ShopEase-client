@@ -67,7 +67,7 @@ const UpdateCategory = ({ category }: { category: Category }) => {
       postData: formdata,
     });
 
-    if (res.success) {
+    if (res?.success) {
       hideModal();
     }
   };

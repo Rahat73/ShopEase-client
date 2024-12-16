@@ -86,8 +86,8 @@ const SignUp = () => {
       selectedUser,
     });
 
-    if (res.success) {
-      if (res.data.user.role === "VENDOR") {
+    if (res?.success) {
+      if (selectedUser === "vendor") {
         router.push("/vendor/add-product");
       } else {
         router.push("/");

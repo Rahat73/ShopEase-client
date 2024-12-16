@@ -70,7 +70,7 @@ const AddCategory = () => {
       postData: formdata,
     });
 
-    if (res.success) {
+    if (res?.success) {
       hideModal();
     }
   };
