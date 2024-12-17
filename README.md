@@ -6,7 +6,7 @@
 
 ## Introduction
 
-**_Purrfect Care_** : _ShopEase is your ultimate online shopping destination, offering a seamless experience with a wide range of products, exclusive deals, and user-friendly features. From top-quality essentials to the latest trends, ShopEase ensures convenience, affordability, and satisfaction for every shopper. Shop smarter, live better with ShopEase!._
+**_ShopEase_** : _ShopEase is your ultimate online shopping destination, offering a seamless experience with a wide range of products, exclusive deals, and user-friendly features. From top-quality essentials to the latest trends, ShopEase ensures convenience, affordability, and satisfaction for every shopper. Shop smarter, live better with ShopEase!._
 
 ## Project Description
 
