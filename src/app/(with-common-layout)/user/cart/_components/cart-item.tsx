@@ -25,12 +25,12 @@ interface CartItemProps {
 const CartItem = ({ product, quantity }: CartItemProps) => {
   const discountedPrice = product.price * (1 - product.discount / 100);
 
-  const { mutate: updateCartItem } = useUpdateData({
+  const { mutate: updateCartItem, isPending: isUpdatePending } = useUpdateData({
     invalidateQueries: [GET_CART],
     doNotShowNotification: true,
   });
 
-  const { mutate: removeCartItem } = useDeleteData({
+  const { mutate: removeCartItem, isPending: isRemovePending } = useDeleteData({
     invalidateQueries: [GET_CART],
   });
 
@@ -81,6 +81,7 @@ const CartItem = ({ product, quantity }: CartItemProps) => {
               size="sm"
               variant="flat"
               isDisabled={quantity === 1}
+              isLoading={isUpdatePending}
               onPress={() => handleUpdateQuantity(quantity - 1)}
             >
               <FaMinus size={16} />
@@ -91,6 +92,7 @@ const CartItem = ({ product, quantity }: CartItemProps) => {
               size="sm"
               variant="flat"
               isDisabled={quantity === product.inventoryCount}
+              isLoading={isUpdatePending}
               onPress={() => handleUpdateQuantity(quantity + 1)}
             >
               <FaPlus size={16} />
@@ -100,6 +102,7 @@ const CartItem = ({ product, quantity }: CartItemProps) => {
             isIconOnly
             color="danger"
             variant="light"
+            isLoading={isRemovePending}
             onPress={() => handleRemoveCartItem()}
           >
             <FaTrash size={20} />

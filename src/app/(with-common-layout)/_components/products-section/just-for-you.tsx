@@ -1,8 +1,9 @@
 "use client";
 
-import { Divider } from "@nextui-org/react";
+import { Divider, Link } from "@nextui-org/react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useEffect, useState } from "react";
+import { Button } from "@nextui-org/button";
 
 import ProductCard from "../../../../components/ui/product-card";
 
@@ -55,7 +56,20 @@ const JustForYou = () => {
 
   return (
     <div className="p-5 bg-default-100 rounded-lg shadow-lg min-h-[50vh]">
-      <p className="text-2xl font-bold ">Just For You</p>
+      <div className="flex items-center justify-between">
+        <p className="text-2xl font-bold ">Just For You</p>
+        <Link href="/products">
+          <Button
+            className="text-tiny text-white bg-black/20"
+            color="default"
+            radius="lg"
+            size="sm"
+            variant="shadow"
+          >
+            View All Products
+          </Button>
+        </Link>
+      </div>
       <Divider className="my-4" />
 
       {isFetching && products.length === 0 ? (

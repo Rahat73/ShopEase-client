@@ -256,13 +256,13 @@ const ProductDetailsPage = ({ params }: { params: { productId: string } }) => {
 
         <div className="my-10 grid grid-cols-1 md:grid-cols-2 gap-8">
           <div>
-            {isFollowedLoading ? (
+            {isFollowedLoading || productLoading ? (
               <VendorCardSkeleton />
             ) : (
               <Card
                 isPressable
                 className="max-w-md mx-auto mt-10 p-2"
-                onPress={() => router.push(`/shop/${data.vendorId}`)}
+                onPress={() => router.push(`/shop/${data?.vendorId}`)}
               >
                 <CardHeader className="justify-between space-x-10">
                   <div className="flex gap-5">
@@ -270,11 +270,11 @@ const ProductDetailsPage = ({ params }: { params: { productId: string } }) => {
                       isBordered
                       radius="full"
                       size="md"
-                      src={vendor.shopLogo}
+                      src={vendor?.shopLogo}
                     />
                     <div className="flex flex-col gap-1 items-start justify-center">
                       <h4 className="text-small font-semibold leading-none text-default-600">
-                        {vendor.shopName}
+                        {vendor?.shopName}
                       </h4>
                       <h5 className="text-small tracking-tight text-default-400">
                         Vendor
@@ -294,8 +294,8 @@ const ProductDetailsPage = ({ params }: { params: { productId: string } }) => {
                   </Button>
                 </CardHeader>
                 <CardBody className="px-3 py-0 text-small text-default-500">
-                  <p>Address: {vendor.address}</p>
-                  <p>Phone: {vendor.phone}</p>
+                  <p>Address: {vendor?.address}</p>
+                  <p>Phone: {vendor?.phone}</p>
                 </CardBody>
               </Card>
             )}
@@ -314,8 +314,8 @@ const ProductDetailsPage = ({ params }: { params: { productId: string } }) => {
                 <p className="text-default-600">
                   This product is brought to you by our trusted vendor,{" "}
                   <strong>
-                    <Link href={`/shop/${data.vendorId}`}>
-                      {vendor.shopName}
+                    <Link href={`/shop/${data?.vendorId}`}>
+                      {vendor?.shopName}
                     </Link>
                   </strong>
                   , specializing in high-quality products,{" "}
@@ -330,7 +330,7 @@ const ProductDetailsPage = ({ params }: { params: { productId: string } }) => {
           </div>
           <div className="mt-10 border-l-3 pl-3">
             <h2 className="text-2xl font-bold mb-4">Reviews</h2>
-            <ProductReviews productId={data.id} />
+            <ProductReviews productId={data?.id} />
           </div>
         </div>
 
@@ -344,8 +344,8 @@ const ProductDetailsPage = ({ params }: { params: { productId: string } }) => {
             ) : (
               <>
                 {relatedProducts.map((product: Product) => {
-                  if (product.id !== data.id) {
-                    return <ProductCard key={product.id} product={product} />;
+                  if (product.id !== data?.id) {
+                    return <ProductCard key={product?.id} product={product} />;
                   }
                 })}
               </>

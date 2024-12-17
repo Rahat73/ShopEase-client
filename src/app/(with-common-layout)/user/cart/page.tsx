@@ -19,6 +19,7 @@ import { CREATE_ORDER, GET_MY_ORDERS } from "@/src/api-endpoints/order.api";
 import AppForm from "@/src/components/form/app-form";
 import AppInput from "@/src/components/form/app-input";
 import { createOrderValidationSchema } from "@/src/schemas/order.schema";
+import CartItemSkeleton from "@/src/components/ui/loading-contents/cart-item-skeleton";
 
 // type TCartItem = {
 //   quantity: number;
@@ -47,7 +48,10 @@ const CartPage = () => {
 
   const router = useRouter();
 
-  const { data } = useFetchData(GET_CART) as { data: Cart };
+  const { data, isLoading: isCartLoading } = useFetchData(GET_CART) as {
+    data: Cart;
+    isLoading: boolean;
+  };
 
   const calculateSubtotal = (cartData: Cart): number => {
     if (!cartData || !cartData.cartItems) {
@@ -73,7 +77,7 @@ const CartPage = () => {
     return Coupons.find((coupon) => coupon.key === selectedCoupon)?.value || 0;
   };
 
-  const { mutateAsync: createOrder } = usePostData({
+  const { mutateAsync: createOrder, isPending: isCreatingOrder } = usePostData({
     invalidateQueries: [GET_ALL_PRODUCTS, GET_MY_ORDERS],
     doNotShowNotification: true,
   });
@@ -108,15 +112,31 @@ const CartPage = () => {
       <Divider className="my-4" />
       <div className="grid grid-cols-5 lg:grid-cols-11 gap-10">
         <div className="space-y-3 col-span-5">
-          {data?.cartItems.map(
-            ({ quantity, product }: { quantity: number; product: Product }) => (
-              <CartItem
-                key={product.id}
-                product={product}
-                quantity={quantity}
-                // handleSelectedCartItems={handleSelectedCartItems}
-              />
-            )
+          {isCartLoading ? (
+            <>
+              {Array.from({ length: 2 }).map((_, index) => (
+                <CartItemSkeleton key={index} />
+              ))}
+            </>
+          ) : (
+            <>
+              {data?.cartItems.map(
+                ({
+                  quantity,
+                  product,
+                }: {
+                  quantity: number;
+                  product: Product;
+                }) => (
+                  <CartItem
+                    key={product.id}
+                    product={product}
+                    quantity={quantity}
+                    // handleSelectedCartItems={handleSelectedCartItems}
+                  />
+                )
+              )}
+            </>
           )}
         </div>
         <div className="col-span-1 flex justify-center ">
@@ -165,7 +185,12 @@ const CartPage = () => {
                 </p>
               </div>
               <div className=" flex justify-center my-3">
-                <Button color="success" className="" type="submit">
+                <Button
+                  color="success"
+                  className=""
+                  type="submit"
+                  isLoading={isCreatingOrder}
+                >
                   Proceed to Payment
                 </Button>
               </div>

@@ -32,22 +32,12 @@ export const siteConfig = {
       icon: MdPreview,
       href: "/user/recently-viewed",
     },
-    {
-      label: "Compare",
-      icon: MdOutlineCompare,
-      href: "/compare",
-    },
   ],
   navItemsAdmin: [
     {
       label: "Dashboard",
       icon: MdDashboard,
       href: "/admin/dashboard",
-    },
-    {
-      label: "Compare",
-      icon: MdOutlineCompare,
-      href: "/compare",
     },
   ],
   navItemsVendor: [
@@ -56,6 +46,8 @@ export const siteConfig = {
       icon: MdDashboard,
       href: "/vendor/dashboard",
     },
+  ],
+  navItemsCommon: [
     {
       label: "Compare",
       icon: MdOutlineCompare,

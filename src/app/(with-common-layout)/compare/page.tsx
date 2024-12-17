@@ -48,7 +48,7 @@ const ComparePage = () => {
     };
   }, [searchTerm]);
 
-  const { data = [] } = useFetchData(
+  const { data = [], isFetching } = useFetchData(
     GET_ALL_PRODUCTS,
     {
       searchTerm: debouncedSearchTerm,
@@ -310,6 +310,7 @@ const ComparePage = () => {
                 <Autocomplete
                   fullWidth
                   isClearable
+                  isLoading={isFetching}
                   size="lg"
                   defaultItems={data}
                   placeholder="Search..."

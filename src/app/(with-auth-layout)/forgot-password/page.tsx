@@ -122,7 +122,7 @@ const ForgotPassword = () => {
         </>
       ) : (
         <>
-          <h3 className="my-2 text-2xl font-bold">Purrfect Care</h3>
+          <h3 className="my-2 text-2xl font-bold">ShopEase</h3>
           <p className="mb-4">Enter your email to reset password</p>
           <div className="w-10/12 md:w-[35%]">
             <AppForm

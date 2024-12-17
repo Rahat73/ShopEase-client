@@ -116,8 +116,28 @@ export const Navbar = async () => {
               ))}
             </>
           )}
+          {siteConfig.navItemsCommon?.map((item) => (
+            <NavbarItem key={item.href}>
+              <Tooltip content={item.label} showArrow={true}>
+                <NextLink
+                  className={clsx(
+                    "data-[active=true]:text-primary data-[active=true]:font-medium"
+                  )}
+                  color="foreground"
+                  href={item.href}
+                >
+                  {item.icon &&
+                    createElement(item.icon, {
+                      size: 20,
+                      className: "hover:opacity-80 text-default-600",
+                    })}
+                </NextLink>
+              </Tooltip>
+            </NavbarItem>
+          ))}
+
           <ThemeSwitch />
-          <NavbarItem className="hidden sm:flex">
+          <NavbarItem>
             <AuthBtn />
           </NavbarItem>
         </NavbarContent>
@@ -127,6 +147,7 @@ export const Navbar = async () => {
           <GithubIcon className="text-default-500" />
         </Link> */}
           <ThemeSwitch />
+          <AuthBtn />
           <NavbarMenuToggle />
         </NavbarContent>
 
@@ -195,6 +216,23 @@ export const Navbar = async () => {
                 ))}
               </>
             )}
+            {siteConfig.navItemsCommon.map((item, index) => (
+              <NavbarMenuItem key={`${item}-${index}`}>
+                <NextLink
+                  href={item.href}
+                  className="flex items-center space-x-3"
+                >
+                  {item.icon &&
+                    createElement(item.icon, {
+                      size: 20,
+                      className: "hover:opacity-80 text-default-600",
+                    })}{" "}
+                  <p className="hover:opacity-80 text-default-600">
+                    {item.label}
+                  </p>
+                </NextLink>
+              </NavbarMenuItem>
+            ))}
           </div>
         </NavbarMenu>
       </NextUINavbar>

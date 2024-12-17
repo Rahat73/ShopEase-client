@@ -9,12 +9,13 @@ import {
   DrawerContent,
   DrawerHeader,
   Link,
+  Pagination,
   Select,
   SelectItem,
   Skeleton,
   useDisclosure,
 } from "@nextui-org/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Button } from "@nextui-org/button";
 
@@ -26,6 +27,11 @@ import { GET_ALL_CATEGORIES } from "@/src/api-endpoints/category.api";
 import ProductCardSkeleton from "@/src/components/ui/loading-contents/product-card-skeleton";
 
 const AllProducts = () => {
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+
+  const limit = 10;
+
   const [sortBy, setSortBy] = useState("");
   const [sortOrder, setSortOrder] = useState("");
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -36,15 +42,25 @@ const AllProducts = () => {
   const searchTerm = searchParams.get("searchTerm");
   const router = useRouter();
 
-  const { data: products = [], isFetching: isProductsFetching } = useFetchData(
-    GET_ALL_PRODUCTS,
-    {
-      sortBy,
-      sortOrder,
-      categoryId,
-      searchTerm,
+  const {
+    data: products = [],
+    meta,
+    isFetching: isProductsFetching,
+  } = useFetchData(GET_ALL_PRODUCTS, {
+    page,
+    limit,
+    sortBy,
+    sortOrder,
+    categoryId,
+    searchTerm,
+  });
+
+  useEffect(() => {
+    if (meta?.total) {
+      setTotalPages(Math.ceil(meta.total / limit));
     }
-  );
+  }, [meta]);
+
   const { data: categories = [], isLoading: isCategoryLoading } =
     useFetchData(GET_ALL_CATEGORIES);
 
@@ -168,6 +184,17 @@ const AllProducts = () => {
                 </>
               )}
             </div>
+            <Pagination
+              isCompact
+              showControls
+              showShadow
+              className="flex justify-center my-3"
+              hidden={!products.length}
+              color="secondary"
+              page={page}
+              total={totalPages}
+              onChange={(page) => setPage(page)}
+            />
           </div>
         </div>
       </div>
