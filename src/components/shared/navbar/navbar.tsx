@@ -25,8 +25,8 @@ export const Navbar = async () => {
   const user = await getCurrentUser();
 
   return (
-    <div className="py-3">
-      <NextUINavbar maxWidth="xl" position="sticky">
+    <>
+      <NextUINavbar maxWidth="xl" position="sticky" className="py-3">
         <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
           <NavbarBrand as="li" className="gap-3 max-w-fit">
             <NextLink
@@ -236,9 +236,9 @@ export const Navbar = async () => {
           </div>
         </NavbarMenu>
       </NextUINavbar>
-      <div className="md:hidden w-10/12 mx-auto">
+      <div className="md:hidden w-10/12 mx-auto pb-3 sticky top-0">
         <SearchBar />
       </div>
-    </div>
+    </>
   );
 };
