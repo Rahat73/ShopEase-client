@@ -21,9 +21,9 @@ import { noImg } from "@/src/constants";
 import AppLoading from "@/src/components/ui/loading-contents/app-loading";
 
 const UnrepliedReviews = () => {
-  const { data: reviews = [], isLoading } = useFetchData(
+  const { data: reviews = [], isFetching } = useFetchData(
     GET_UNREPLIED_REVIEWS
-  ) as { data: Review[]; isLoading: boolean };
+  ) as { data: Review[]; isFetching: boolean };
 
   return (
     <div className="my-1 max-w-4xl mx-auto">
@@ -32,7 +32,7 @@ const UnrepliedReviews = () => {
       </div>
       <Divider className="my-4" />
 
-      {isLoading ? (
+      {isFetching ? (
         <AppLoading />
       ) : (
         <>

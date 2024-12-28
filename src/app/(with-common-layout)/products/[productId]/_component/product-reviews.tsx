@@ -18,16 +18,16 @@ import { noImg } from "@/src/constants";
 import ReviewCardSkeleton from "@/src/components/ui/loading-contents/review-card-skeleton";
 
 const ProductReviews = ({ productId }: { productId: string }) => {
-  const { data: reviews = [], isLoading } = useFetchData(
+  const { data: reviews = [], isFetching } = useFetchData(
     GET_PRODUCT_REVIEWS + "/" + productId
   ) as {
     data: Review[];
-    isLoading: boolean;
+    isFetching: boolean;
   };
 
   return (
     <div className="space-y-6">
-      {isLoading ? (
+      {isFetching ? (
         <ReviewCardSkeleton />
       ) : reviews.length === 0 ? (
         <div className="text-center py-4">No reviews yet for this product.</div>

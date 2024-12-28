@@ -42,11 +42,11 @@ const columns = [
 ];
 
 const CustomerList = () => {
-  const { data: customersData = [], isLoading } = useFetchData(
+  const { data: customersData = [], isFetching } = useFetchData(
     GET_CUSTOMERS
   ) as {
     data: Customer[];
-    isLoading: boolean;
+    isFetching: boolean;
   };
 
   const { mutate: updateCustomer } = useUpdateData({
@@ -67,7 +67,7 @@ const CustomerList = () => {
       <TableBody
         items={customersData}
         emptyContent={"No rows to display."}
-        isLoading={isLoading}
+        isLoading={isFetching}
         loadingContent={<AppLoading />}
       >
         {(item: Customer) => (

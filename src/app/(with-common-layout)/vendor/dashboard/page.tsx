@@ -28,9 +28,9 @@ const VendorDashboard = () => {
   const [imageFiles, setImageFiles] = useState<File | undefined>();
   const [imagePreviews, setImagePreviews] = useState<string | undefined>();
 
-  const { data, isLoading } = useFetchData(GET_MY_PROFILE) as {
+  const { data, isFetching } = useFetchData(GET_MY_PROFILE) as {
     data: TVendor;
-    isLoading: boolean;
+    isFetching: boolean;
   };
 
   const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -78,7 +78,7 @@ const VendorDashboard = () => {
         <p>Dashboard</p>
       </div>
       <Divider className="my-4" />
-      {isLoading ? (
+      {isFetching ? (
         <AppLoading />
       ) : (
         <div className="max-w-xs mx-auto my-10 relative">
@@ -129,7 +129,7 @@ const VendorDashboard = () => {
               <Button
                 type="submit"
                 color="primary"
-                isDisabled={isLoading}
+                isDisabled={isFetching}
                 isLoading={isPending}
                 startContent={<FaEdit />}
               >

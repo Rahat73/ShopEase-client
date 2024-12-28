@@ -9,7 +9,7 @@ import { Product } from "@/src/types";
 import ProductCardSkeleton from "@/src/components/ui/loading-contents/product-card-skeleton";
 
 const RecentlyViewedPage = () => {
-  const { data = [], isLoading } = useFetchData(GET_RECENT_PRODUCTS);
+  const { data = [], isFetching } = useFetchData(GET_RECENT_PRODUCTS);
 
   return (
     <div className="py-5">
@@ -18,7 +18,7 @@ const RecentlyViewedPage = () => {
       </div>
       <Divider className="my-4" />
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
-        {isLoading ? (
+        {isFetching ? (
           <>
             {Array.from({ length: 5 }).map((_, index) => (
               <ProductCardSkeleton key={index} />

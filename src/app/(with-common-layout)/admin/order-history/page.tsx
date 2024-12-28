@@ -119,7 +119,7 @@ const AdminOrderHistory = () => {
   const {
     data: ordersData = [],
     meta,
-    isLoading,
+    isFetching,
   } = useFetchData(GET_ORDERS, { page, limit });
 
   useEffect(() => {
@@ -162,7 +162,7 @@ const AdminOrderHistory = () => {
           ))}
         </TableHeader>
         <TableBody
-          isLoading={isLoading}
+          isLoading={isFetching}
           loadingContent={<AppLoading />}
           emptyContent={"No rows to display."}
         >

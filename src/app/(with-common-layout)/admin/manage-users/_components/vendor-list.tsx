@@ -46,9 +46,9 @@ const columns = [
 ];
 
 const VendorList = () => {
-  const { data: vendorsData = [], isLoading } = useFetchData(GET_VENDORS) as {
+  const { data: vendorsData = [], isFetching } = useFetchData(GET_VENDORS) as {
     data: TVendor[];
-    isLoading: boolean;
+    isFetching: boolean;
   };
 
   const { mutate: updateVendor } = useUpdateData({
@@ -78,7 +78,7 @@ const VendorList = () => {
       <TableBody
         items={vendorsData}
         emptyContent={"No rows to display."}
-        isLoading={isLoading}
+        isLoading={isFetching}
         loadingContent={<AppLoading />}
       >
         {(item: TVendor) => (

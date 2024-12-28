@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Button,
   Card,
@@ -10,8 +12,8 @@ import {
   ModalFooter,
   ModalHeader,
 } from "@nextui-org/react";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { Link } from "@nextui-org/link";
 
 import { Product } from "@/src/types";
 import { noImg } from "@/src/constants";
@@ -24,15 +26,12 @@ import { useFetchData } from "@/src/hooks/fetch.hook";
 const ProductCard = ({ product }: { product: Product }) => {
   const [isWarningOpen, setIsWarningOpen] = useState(false);
 
-  const router = useRouter();
-
   const { mutate } = usePostData({
     invalidateQueries: [GET_ALL_PRODUCTS],
     doNotShowNotification: true,
   });
 
   const handleClick = () => {
-    router.push(`/products/${product.id}`);
     mutate({
       url: ADD_RECENT_PRODUCT,
       postData: {
@@ -78,53 +77,58 @@ const ProductCard = ({ product }: { product: Product }) => {
 
   return (
     <>
-      <Card
-        key={product.id}
-        isPressable
-        shadow="sm"
-        className="group"
-        radius="sm"
-        onPress={handleClick}
-      >
-        <CardBody className="overflow-visible p-0">
-          <Image
-            isBlurred
-            alt={product.name}
-            className="w-full object-cover h-[180px] group-hover:scale-110 transition-all duration-300"
-            radius="sm"
-            shadow="sm"
-            src={product.images?.[0] || noImg}
-            width="100%"
-          />
-        </CardBody>
-        <div className="flex flex-col items-center w-full mt-2">
-          <div>
-            <b>{product.name}</b>
-          </div>
-          <div className="font-bold text-green-700 text-lg">
-            $
-            {(product.price - product.price * (product.discount / 100)).toFixed(
-              2
-            )}
-            <div className="text-default-400 space-x-2 text-tiny">
-              <span className="line-through">${product.price.toFixed(2)}</span>
-              <span className="bg-red-600 px-1 text-white rounded">
-                {product.discount}%
-              </span>
+      <Link className="w-full h-full block" href={`/products/${product.id}`}>
+        <Card
+          key={product.id}
+          isPressable
+          shadow="sm"
+          className="group w-full h-full"
+          radius="sm"
+          onPress={handleClick}
+        >
+          <CardBody className="overflow-visible p-0">
+            <Image
+              isBlurred
+              alt={product.name}
+              className="w-full object-cover h-[180px] group-hover:scale-110 transition-all duration-300"
+              radius="sm"
+              shadow="sm"
+              src={product.images?.[0] || noImg}
+              width="100%"
+            />
+          </CardBody>
+          <div className="flex flex-col items-center w-full mt-2">
+            <div>
+              <b>{product.name}</b>
+            </div>
+            <div className="font-bold text-green-700 text-lg">
+              $
+              {(
+                product.price -
+                product.price * (product.discount / 100)
+              ).toFixed(2)}
+              <div className="text-default-400 space-x-2 text-tiny">
+                <span className="line-through">
+                  ${product.price.toFixed(2)}
+                </span>
+                <span className="bg-red-600 px-1 text-white rounded">
+                  {product.discount}%
+                </span>
+              </div>
             </div>
           </div>
-        </div>
-        <CardFooter className="text-small flex-col justify-start">
-          <Button
-            isDisabled={cartLoading}
-            size="sm"
-            isLoading={isPending}
-            onPress={handleAddToCart}
-          >
-            Add to Cart
-          </Button>
-        </CardFooter>
-      </Card>
+          <CardFooter className="text-small flex-col justify-start">
+            <Button
+              isDisabled={cartLoading}
+              size="sm"
+              isLoading={isPending}
+              onPress={handleAddToCart}
+            >
+              Add to Cart
+            </Button>
+          </CardFooter>
+        </Card>
+      </Link>
       <Modal
         backdrop="blur"
         aria-labelledby="modal-title"

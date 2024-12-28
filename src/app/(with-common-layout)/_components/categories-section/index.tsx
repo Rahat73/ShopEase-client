@@ -10,7 +10,7 @@ import { Category } from "@/src/types";
 import AppLoading from "@/src/components/ui/loading-contents/app-loading";
 
 const CategoriesSection = () => {
-  const { data = [], isLoading } = useFetchData(GET_ALL_CATEGORIES);
+  const { data = [], isFetching } = useFetchData(GET_ALL_CATEGORIES);
 
   const router = useRouter();
 
@@ -18,7 +18,7 @@ const CategoriesSection = () => {
     <div className="p-5 bg-default-100 rounded-lg shadow-lg min-h-[40vh]">
       <p className="text-2xl font-bold ">Categories</p>
       <Divider className="my-4" />
-      {isLoading ? (
+      {isFetching ? (
         <AppLoading />
       ) : (
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">

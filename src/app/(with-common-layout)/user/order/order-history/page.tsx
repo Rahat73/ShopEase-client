@@ -136,7 +136,7 @@ const OrderHistoryPage = () => {
   const {
     data: ordersData = [],
     meta,
-    isLoading,
+    isFetching,
   } = useFetchData(GET_MY_ORDERS, { page, limit });
 
   useEffect(() => {
@@ -179,7 +179,7 @@ const OrderHistoryPage = () => {
           ))}
         </TableHeader>
         <TableBody
-          isLoading={isLoading}
+          isLoading={isFetching}
           loadingContent={<AppLoading />}
           emptyContent={"No rows to display."}
         >

@@ -46,11 +46,11 @@ const columns = [
 ];
 
 const AdminManageCategories = () => {
-  const { data: categories = [], isLoading } = useFetchData(
+  const { data: categories = [], isFetching } = useFetchData(
     GET_ALL_CATEGORIES
   ) as {
     data: Category[];
-    isLoading: boolean;
+    isFetching: boolean;
   };
 
   return (
@@ -69,7 +69,7 @@ const AdminManageCategories = () => {
         <TableBody
           items={categories}
           emptyContent={"No rows to display."}
-          isLoading={isLoading}
+          isLoading={isFetching}
           loadingContent={<AppLoading />}
         >
           {(item: Category) => (

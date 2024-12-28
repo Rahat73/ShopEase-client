@@ -102,7 +102,7 @@ const VendorProductListPage = () => {
   const {
     data: products = [],
     meta,
-    isLoading,
+    isFetching,
   } = useFetchData(GET_MY_PRODUCTS, { page, limit });
 
   useEffect(() => {
@@ -147,7 +147,7 @@ const VendorProductListPage = () => {
         <TableBody
           items={products}
           emptyContent={"No rows to display."}
-          isLoading={isLoading}
+          isLoading={isFetching}
           loadingContent={<AppLoading />}
         >
           {(item: Product) => (

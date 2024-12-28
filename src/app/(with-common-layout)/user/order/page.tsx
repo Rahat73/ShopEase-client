@@ -38,7 +38,7 @@ const OrderPage = ({
   const router = useRouter();
   const { productId, quantity } = searchParams;
 
-  const { data, isLoading } = useFetchData(
+  const { data, isFetching } = useFetchData(
     `${GET_ALL_PRODUCTS}/${productId}`,
     undefined,
     () => !!productId
@@ -89,7 +89,7 @@ const OrderPage = ({
       <Divider className="my-4" />
       <div className="grid grid-cols-5 lg:grid-cols-11 gap-10">
         <div className="space-y-3 col-span-5">
-          {isLoading ? (
+          {isFetching ? (
             <CartItemSkeleton />
           ) : (
             <Card className="w-full max-w-lg mx-auto" radius="sm">
