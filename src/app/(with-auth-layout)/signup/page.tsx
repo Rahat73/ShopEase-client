@@ -97,195 +97,189 @@ const SignUp = () => {
   };
 
   return (
-    <div>
-      <div className="flex w-full min-h-screen py-5 flex-col items-center justify-center">
-        <h3 className="my-2 text-2xl font-bold">Sign up with ShopEase</h3>
-        <p className="mb-4">Let&lsquo;s Get You Signed Up !</p>
-        <div className="w-10/12 md:w-[35%]">
-          <Tabs
-            fullWidth
-            aria-label="Options"
-            selectedKey={selectedUser}
-            onSelectionChange={(key: React.Key) => {
-              setSelectedUser(key as string);
-              setImagePreviews(undefined);
-              setImageFiles(undefined);
-            }}
-          >
-            <Tab key="customer" title="Customer">
-              <Card>
-                <CardBody>
-                  <AppForm
-                    resolver={zodResolver(customerSignupValidationSchema)}
-                    onSubmit={onSubmit}
-                  >
-                    <div className="py-2">
-                      <AppInput
-                        name="name"
-                        label="Name (required)"
-                        type="text"
-                      />
-                    </div>
-                    <div className="py-2">
-                      <AppInput
-                        name="email"
-                        label="Email (required)"
-                        type="email"
-                      />
-                    </div>
-                    <div className="py-2">
-                      <AppInput name="phone" label="Phone" type="tel" />
-                    </div>
-                    <div className="py-2">
-                      <AppInput name="address" label="Address" type="text" />
-                    </div>
-                    <div className="py-2">
-                      <AppInput
-                        name="password"
-                        label="Password (required)"
-                        type={`${showPass ? "text" : "password"}`}
-                        clearable={false}
-                        endContent={
-                          <FaLock
-                            className="text-2xl text-default-400 cursor-pointer"
-                            onClick={() => setShowPass(!showPass)}
-                          />
-                        }
-                      />
-                    </div>
-                    <div className="min-w-fit flex-1">
-                      <label
-                        className="flex h-14 w-full cursor-pointer items-center justify-center rounded-xl border-2 border-default-200 text-default-500 shadow-sm transition-all duration-100 hover:border-default-400"
-                        htmlFor="image"
-                      >
-                        Upload Profile Picture
-                      </label>
-                      <input
-                        className="hidden"
-                        id="image"
-                        type="file"
-                        accept="image/*"
-                        onChange={(e) => handleImageChange(e)}
-                      />
-                    </div>
-
-                    {imagePreviews && (
-                      <div className="flex gap-5 my-5 flex-wrap">
-                        <div
-                          key={imagePreviews}
-                          className="relative size-48 rounded-xl border-2 border-dashed border-default-300 p-2"
-                        >
-                          <Avatar
-                            alt="item"
-                            className="h-full w-full"
-                            src={imagePreviews}
-                          />
-                        </div>
-                      </div>
-                    )}
-
-                    <Button
-                      className="my-3 w-full rounded-md bg-default-900 font-semibold text-default"
-                      size="lg"
-                      type="submit"
-                      isLoading={isPending}
+    <div className="flex w-full min-h-[80vh] py-5 flex-col items-center justify-center">
+      <h3 className="my-2 text-2xl font-bold">Sign up with ShopEase</h3>
+      <p className="mb-4">Let&lsquo;s Get You Signed Up !</p>
+      <div className="w-10/12 md:w-[35%]">
+        <Tabs
+          fullWidth
+          aria-label="Options"
+          selectedKey={selectedUser}
+          onSelectionChange={(key: React.Key) => {
+            setSelectedUser(key as string);
+            setImagePreviews(undefined);
+            setImageFiles(undefined);
+          }}
+        >
+          <Tab key="customer" title="Customer">
+            <Card>
+              <CardBody>
+                <AppForm
+                  resolver={zodResolver(customerSignupValidationSchema)}
+                  onSubmit={onSubmit}
+                >
+                  <div className="py-2">
+                    <AppInput name="name" label="Name (required)" type="text" />
+                  </div>
+                  <div className="py-2">
+                    <AppInput
+                      name="email"
+                      label="Email (required)"
+                      type="email"
+                    />
+                  </div>
+                  <div className="py-2">
+                    <AppInput name="phone" label="Phone" type="tel" />
+                  </div>
+                  <div className="py-2">
+                    <AppInput name="address" label="Address" type="text" />
+                  </div>
+                  <div className="py-2">
+                    <AppInput
+                      name="password"
+                      label="Password (required)"
+                      type={`${showPass ? "text" : "password"}`}
+                      clearable={false}
+                      endContent={
+                        <FaLock
+                          className="text-2xl text-default-400 cursor-pointer"
+                          onClick={() => setShowPass(!showPass)}
+                        />
+                      }
+                    />
+                  </div>
+                  <div className="min-w-fit flex-1">
+                    <label
+                      className="flex h-14 w-full cursor-pointer items-center justify-center rounded-xl border-2 border-default-200 text-default-500 shadow-sm transition-all duration-100 hover:border-default-400"
+                      htmlFor="image"
                     >
-                      Sign Up
-                    </Button>
-                  </AppForm>
-                </CardBody>
-              </Card>
-            </Tab>
-            <Tab key="vendor" title="Vendor">
-              <Card>
-                <CardBody>
-                  <AppForm
-                    resolver={zodResolver(vendorSignupValidationSchema)}
-                    onSubmit={onSubmit}
-                  >
-                    <div className="py-2">
-                      <AppInput name="email" label="Email" type="email" />
-                    </div>
-                    <div className="py-2">
-                      <AppInput name="phone" label="Phone" type="tel" />
-                    </div>
-                    <div className="py-2">
-                      <AppInput name="shopName" label="Shop Name" type="text" />
-                    </div>
-                    <div className="py-2">
-                      <AppInput name="address" label="Address" type="text" />
-                    </div>
+                      Upload Profile Picture
+                    </label>
+                    <input
+                      className="hidden"
+                      id="image"
+                      type="file"
+                      accept="image/*"
+                      onChange={(e) => handleImageChange(e)}
+                    />
+                  </div>
 
-                    <div className="py-2">
-                      <AppInput
-                        name="password"
-                        label="Password"
-                        type={`${showPass ? "text" : "password"}`}
-                        clearable={false}
-                        endContent={
-                          <FaLock
-                            className="text-2xl text-default-400 cursor-pointer"
-                            onClick={() => setShowPass(!showPass)}
-                          />
-                        }
-                      />
-                    </div>
-                    <div className="py-2">
-                      <AppTextarea
-                        name="shopDescription"
-                        label="Shop Description"
-                        type="text"
-                      />
-                    </div>
-                    <div className="min-w-fit flex-1">
-                      <label
-                        className="flex h-14 w-full cursor-pointer items-center justify-center rounded-xl border-2 border-default-200 text-default-500 shadow-sm transition-all duration-100 hover:border-default-400"
-                        htmlFor="image"
+                  {imagePreviews && (
+                    <div className="flex gap-5 my-5 flex-wrap">
+                      <div
+                        key={imagePreviews}
+                        className="relative size-48 rounded-xl border-2 border-dashed border-default-300 p-2"
                       >
-                        Upload Shop Logo
-                      </label>
-                      <input
-                        multiple
-                        className="hidden"
-                        id="image"
-                        type="file"
-                        onChange={(e) => handleImageChange(e)}
-                      />
-                    </div>
-
-                    {imagePreviews && (
-                      <div className="flex gap-5 my-5 flex-wrap">
-                        <div
-                          key={imagePreviews}
-                          className="relative size-48 rounded-xl border-2 border-dashed border-default-300 p-2"
-                        >
-                          <Avatar
-                            alt="item"
-                            className="h-full w-full"
-                            src={imagePreviews}
-                          />
-                        </div>
+                        <Avatar
+                          alt="item"
+                          className="h-full w-full"
+                          src={imagePreviews}
+                        />
                       </div>
-                    )}
-                    <Button
-                      className="my-3 w-full rounded-md bg-default-900 font-semibold text-default"
-                      size="lg"
-                      type="submit"
-                      isLoading={isPending}
+                    </div>
+                  )}
+
+                  <Button
+                    className="my-3 w-full rounded-md bg-default-900 font-semibold text-default"
+                    size="lg"
+                    type="submit"
+                    isLoading={isPending}
+                  >
+                    Sign Up
+                  </Button>
+                </AppForm>
+              </CardBody>
+            </Card>
+          </Tab>
+          <Tab key="vendor" title="Vendor">
+            <Card>
+              <CardBody>
+                <AppForm
+                  resolver={zodResolver(vendorSignupValidationSchema)}
+                  onSubmit={onSubmit}
+                >
+                  <div className="py-2">
+                    <AppInput name="email" label="Email" type="email" />
+                  </div>
+                  <div className="py-2">
+                    <AppInput name="phone" label="Phone" type="tel" />
+                  </div>
+                  <div className="py-2">
+                    <AppInput name="shopName" label="Shop Name" type="text" />
+                  </div>
+                  <div className="py-2">
+                    <AppInput name="address" label="Address" type="text" />
+                  </div>
+
+                  <div className="py-2">
+                    <AppInput
+                      name="password"
+                      label="Password"
+                      type={`${showPass ? "text" : "password"}`}
+                      clearable={false}
+                      endContent={
+                        <FaLock
+                          className="text-2xl text-default-400 cursor-pointer"
+                          onClick={() => setShowPass(!showPass)}
+                        />
+                      }
+                    />
+                  </div>
+                  <div className="py-2">
+                    <AppTextarea
+                      name="shopDescription"
+                      label="Shop Description"
+                      type="text"
+                    />
+                  </div>
+                  <div className="min-w-fit flex-1">
+                    <label
+                      className="flex h-14 w-full cursor-pointer items-center justify-center rounded-xl border-2 border-default-200 text-default-500 shadow-sm transition-all duration-100 hover:border-default-400"
+                      htmlFor="image"
                     >
-                      Sign Up
-                    </Button>
-                  </AppForm>
-                </CardBody>
-              </Card>
-            </Tab>
-          </Tabs>
-          <div className="text-center">
-            Already have an account ?{" "}
-            <Link href={"/signin"} className="text-primary-500">
-              Login
-            </Link>
-          </div>
+                      Upload Shop Logo
+                    </label>
+                    <input
+                      multiple
+                      className="hidden"
+                      id="image"
+                      type="file"
+                      onChange={(e) => handleImageChange(e)}
+                    />
+                  </div>
+
+                  {imagePreviews && (
+                    <div className="flex gap-5 my-5 flex-wrap">
+                      <div
+                        key={imagePreviews}
+                        className="relative size-48 rounded-xl border-2 border-dashed border-default-300 p-2"
+                      >
+                        <Avatar
+                          alt="item"
+                          className="h-full w-full"
+                          src={imagePreviews}
+                        />
+                      </div>
+                    </div>
+                  )}
+                  <Button
+                    className="my-3 w-full rounded-md bg-default-900 font-semibold text-default"
+                    size="lg"
+                    type="submit"
+                    isLoading={isPending}
+                  >
+                    Sign Up
+                  </Button>
+                </AppForm>
+              </CardBody>
+            </Card>
+          </Tab>
+        </Tabs>
+        <div className="text-center">
+          Already have an account ?{" "}
+          <Link href={"/signin"} className="text-primary-500">
+            Login
+          </Link>
         </div>
       </div>
     </div>

@@ -41,6 +41,7 @@ import ProductDetailsSkeleton from "@/src/components/ui/loading-contents/product
 import { noImg } from "@/src/constants";
 import VendorCardSkeleton from "@/src/components/ui/loading-contents/vendor-card-skeleton";
 import ProductCardSkeleton from "@/src/components/ui/loading-contents/product-card-skeleton";
+import { ADD_RECENT_PRODUCT } from "@/src/api-endpoints/recent-product.api";
 
 const ProductDetailsPage = ({ params }: { params: { productId: string } }) => {
   useEffect(() => {
@@ -70,6 +71,20 @@ const ProductDetailsPage = ({ params }: { params: { productId: string } }) => {
     undefined,
     () => !!params.productId
   );
+
+  const { mutate } = usePostData({
+    invalidateQueries: [GET_ALL_PRODUCTS],
+    doNotShowNotification: true,
+  });
+
+  useEffect(() => {
+    mutate({
+      url: ADD_RECENT_PRODUCT,
+      postData: {
+        productId: params.productId,
+      },
+    });
+  }, [params.productId]);
 
   const { mutate: addToCartMutation, isPending } = usePostData({
     invalidateQueries: [GET_CART],

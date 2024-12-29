@@ -11,8 +11,7 @@ import { SHOPEASE_SUMMARY } from "@/src/api-endpoints/summary.api";
 const VendorsSection = () => {
   const router = useRouter();
 
-  const { data: summary, isFetching: isFetchingSummary } =
-    useFetchData(SHOPEASE_SUMMARY);
+  const { data: summary } = useFetchData(SHOPEASE_SUMMARY);
 
   const stats = [
     { value: summary?.totalShops || 0, label: "Active Shops" },
@@ -71,7 +70,7 @@ const VendorsSection = () => {
           <Button
             size="lg"
             className="group bg-default-900 text-default-50"
-            onPress={() => router.push("/shops")}
+            onPress={() => router.push("/shop")}
           >
             Explore All Shops
             <FaArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />

@@ -81,7 +81,7 @@ const ForgotPassword = () => {
   }, [resetSuccess]);
 
   return (
-    <div className="flex min-h-screen py-5 w-full flex-col items-center justify-center">
+    <div className="flex min-h-[80vh] py-5 w-full flex-col items-center justify-center">
       {userId && token ? (
         <>
           <h3 className="my-2 text-2xl font-bold">ShopEase</h3>

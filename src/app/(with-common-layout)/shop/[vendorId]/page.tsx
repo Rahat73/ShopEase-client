@@ -9,7 +9,14 @@ import {
   Divider,
   Skeleton,
 } from "@nextui-org/react";
-import { FaHeart, FaMapPin, FaPeopleGroup, FaPhone } from "react-icons/fa6";
+import {
+  FaBagShopping,
+  FaHeart,
+  FaMapPin,
+  FaPeopleGroup,
+  FaPhone,
+} from "react-icons/fa6";
+import { formatDate } from "date-fns";
 
 import {
   GET_ALL_PRODUCTS,
@@ -25,6 +32,7 @@ import {
   FOLLOW_VENDOR,
   GET_FOLLOWED_VENDORS,
 } from "@/src/api-endpoints/follow.api";
+import ProductCardSkeleton from "@/src/components/ui/loading-contents/product-card-skeleton";
 
 const ShopPage = ({ params }: { params: { vendorId: string } }) => {
   const { vendorId } = params;
@@ -73,9 +81,7 @@ const ShopPage = ({ params }: { params: { vendorId: string } }) => {
         </Skeleton>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-8">
           {[...Array(8)].map((_, index) => (
-            <Skeleton key={index} className="rounded-lg">
-              <div className="h-60 rounded-lg bg-default-300" />
-            </Skeleton>
+            <ProductCardSkeleton key={index} />
           ))}
         </div>
       </div>
@@ -94,8 +100,11 @@ const ShopPage = ({ params }: { params: { vendorId: string } }) => {
             />
             <div className="text-center sm:text-left">
               <h1 className="text-2xl font-bold">{vendorData.shopName}</h1>
-              <p className="text-default-500 mt-1">
+              <p className="text-default-600 mt-1">
                 {vendorData.shopDescription}
+              </p>
+              <p className="text-default-600 mt-1">
+                Join Date: {formatDate(vendorData.createdAt, "dd MMM, yyyy")}
               </p>
             </div>
           </div>
@@ -118,6 +127,10 @@ const ShopPage = ({ params }: { params: { vendorId: string } }) => {
           <div className="flex items-center gap-2 mb-2 sm:mb-0">
             <FaPeopleGroup size={18} />
             <p>Followers: {vendorData.follow.length}</p>
+          </div>
+          <div className="flex items-center gap-2">
+            <FaBagShopping size={18} />
+            <p>Products: {productData.length}</p>
           </div>
           <div className="flex items-center gap-2">
             <FaPhone size={18} />
