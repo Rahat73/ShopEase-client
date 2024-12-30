@@ -9,23 +9,18 @@ import {
 import { Button } from "@nextui-org/button";
 import { FaTrash } from "react-icons/fa";
 
-import {
-  DELETE_CATEGORY,
-  GET_ALL_CATEGORIES,
-} from "@/src/api-endpoints/category.api";
 import { useDeleteData } from "@/src/hooks/mutation.hook";
+import { DELETE_COUPON, GET_ALL_COUPONS } from "@/src/api-endpoints/coupon.api";
 
-const DeleteCategories = ({ categoryId }: { categoryId: string }) => {
+const DeleteCoupon = ({ couponId }: { couponId: string }) => {
   const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure();
 
-  const { mutateAsync: deleteProduct, isPending } = useDeleteData({
-    invalidateQueries: [GET_ALL_CATEGORIES],
+  const { mutateAsync: deleteCoupon, isPending } = useDeleteData({
+    invalidateQueries: [GET_ALL_COUPONS],
   });
 
   const handleDelete = async () => {
-    const res = await deleteProduct({
-      url: `${DELETE_CATEGORY}/${categoryId}`,
-    });
+    const res = await deleteCoupon({ url: `${DELETE_COUPON}/${couponId}` });
 
     if (res?.success) {
       onClose();
@@ -48,7 +43,7 @@ const DeleteCategories = ({ categoryId }: { categoryId: string }) => {
       >
         <ModalContent>
           <ModalHeader className="flex flex-col gap-10">
-            Delete Category
+            Delete Coupon
           </ModalHeader>
           <ModalBody>Do you really want to delete this category?</ModalBody>
           <ModalFooter>
@@ -65,4 +60,4 @@ const DeleteCategories = ({ categoryId }: { categoryId: string }) => {
   );
 };
 
-export default DeleteCategories;
+export default DeleteCoupon;

@@ -212,3 +212,11 @@ export type ReviewReply = {
   updatedAt: Date;
   reviewId: string;
 };
+
+export type Coupon = {
+  id: string;
+  code: string;
+  discount: number;
+  createdAt: Date;
+  updatedAt: Date;
+};

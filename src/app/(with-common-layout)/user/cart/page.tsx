@@ -11,8 +11,7 @@ import CartItem from "./_components/cart-item";
 
 import { GET_CART } from "@/src/api-endpoints/cart.api";
 import { useFetchData } from "@/src/hooks/fetch.hook";
-import { Cart, Product } from "@/src/types";
-import { Coupons } from "@/src/constants";
+import { Cart, Coupon, Product } from "@/src/types";
 import { usePostData } from "@/src/hooks/mutation.hook";
 import { GET_ALL_PRODUCTS } from "@/src/api-endpoints/product.api";
 import { CREATE_ORDER, GET_MY_ORDERS } from "@/src/api-endpoints/order.api";
@@ -20,6 +19,7 @@ import AppForm from "@/src/components/form/app-form";
 import AppInput from "@/src/components/form/app-input";
 import { createOrderValidationSchema } from "@/src/schemas/order.schema";
 import CartItemSkeleton from "@/src/components/ui/loading-contents/cart-item-skeleton";
+import { GET_ALL_COUPONS } from "@/src/api-endpoints/coupon.api";
 
 // type TCartItem = {
 //   quantity: number;
@@ -53,6 +53,9 @@ const CartPage = () => {
     isLoading: boolean;
   };
 
+  const { data: coupon = [], isLoading: isCouponLoading } =
+    useFetchData(GET_ALL_COUPONS);
+
   const calculateSubtotal = (cartData: Cart): number => {
     if (!cartData || !cartData.cartItems) {
       return 0;
@@ -74,7 +77,10 @@ const CartPage = () => {
   }, [data]);
 
   const discount = () => {
-    return Coupons.find((coupon) => coupon.key === selectedCoupon)?.value || 0;
+    return (
+      coupon.find((coupon: Coupon) => coupon.code === selectedCoupon)
+        ?.discount || 0
+    );
   };
 
   const { mutateAsync: createOrder, isPending: isCreatingOrder } = usePostData({
@@ -159,13 +165,14 @@ const CartPage = () => {
                 <Select
                   className=""
                   label="Select a coupon"
+                  isLoading={isCouponLoading}
                   onChange={(e) => setSelectedCoupon(e.target.value)}
                 >
-                  {Coupons.map((coupon) => (
-                    <SelectItem key={coupon.key} textValue={coupon.label}>
-                      {coupon.label}{" "}
+                  {coupon.map((coupon: Coupon) => (
+                    <SelectItem key={coupon.code} textValue={coupon.code}>
+                      {coupon.code}{" "}
                       <span className="ml-5 text-tiny">
-                        Enjoy-${coupon.value}% off
+                        Enjoy-${coupon.discount}% off
                       </span>
                     </SelectItem>
                   ))}

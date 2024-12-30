@@ -6,6 +6,7 @@ import Link from "next/link";
 import { Divider } from "@nextui-org/react";
 import {
   MdCategory,
+  MdDiscount,
   MdListAlt,
   MdOutlineDashboard,
   MdPeople,
@@ -33,6 +34,11 @@ const AdminLayout = ({ children }: { children: ReactNode }) => {
       name: "Manage Categories",
       href: "/admin/manage-categories",
       icon: <MdCategory size={20} className="mr-3" />,
+    },
+    {
+      name: "Manage Coupons",
+      href: "/admin/manage-coupons",
+      icon: <MdDiscount size={20} className="mr-3" />,
     },
     {
       name: "Order History",

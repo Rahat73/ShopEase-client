@@ -18,13 +18,15 @@ import { useRouter } from "next/navigation";
 
 import { GET_ALL_PRODUCTS } from "@/src/api-endpoints/product.api";
 import { useFetchData } from "@/src/hooks/fetch.hook";
-import { Coupons, noImg } from "@/src/constants";
+import { noImg } from "@/src/constants";
 import { usePostData } from "@/src/hooks/mutation.hook";
 import { CREATE_ORDER, GET_MY_ORDERS } from "@/src/api-endpoints/order.api";
 import AppForm from "@/src/components/form/app-form";
 import AppInput from "@/src/components/form/app-input";
 import { createOrderValidationSchema } from "@/src/schemas/order.schema";
 import CartItemSkeleton from "@/src/components/ui/loading-contents/cart-item-skeleton";
+import { GET_ALL_COUPONS } from "@/src/api-endpoints/coupon.api";
+import { Coupon } from "@/src/types";
 
 const OrderPage = ({
   searchParams,
@@ -43,6 +45,9 @@ const OrderPage = ({
     undefined,
     () => !!productId
   );
+
+  const { data: coupons = [], isLoading: couponLoading } =
+    useFetchData(GET_ALL_COUPONS);
 
   const { mutateAsync: createOrder, isPending } = usePostData({
     invalidateQueries: [GET_ALL_PRODUCTS, GET_MY_ORDERS],
@@ -78,7 +83,10 @@ const OrderPage = ({
   }, [data, newQuantity]);
 
   const discount = () => {
-    return Coupons.find((coupon) => coupon.key === selectedCoupon)?.value || 0;
+    return (
+      coupons.find((coupon: Coupon) => coupon.code === selectedCoupon)
+        ?.discount || 0
+    );
   };
 
   return (
@@ -170,14 +178,15 @@ const OrderPage = ({
               </div>
               <div className="my-2 max-w-sm mx-auto">
                 <Select
+                  isLoading={couponLoading}
                   label="Select a coupon"
                   onChange={(e) => setSelectedCoupon(e.target.value)}
                 >
-                  {Coupons.map((coupon) => (
-                    <SelectItem key={coupon.key} textValue={coupon.label}>
-                      {coupon.label}{" "}
+                  {coupons.map((coupon: Coupon) => (
+                    <SelectItem key={coupon.code} textValue={coupon.code}>
+                      {coupon.code}{" "}
                       <span className="ml-5 text-tiny">
-                        Enjoy-${coupon.value}% off
+                        Enjoy-${coupon.discount}% off
                       </span>
                     </SelectItem>
                   ))}
