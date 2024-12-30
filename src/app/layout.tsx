@@ -2,6 +2,8 @@ import "@/src/styles/globals.css";
 import clsx from "clsx";
 import { Metadata, Viewport } from "next";
 
+import Footer from "../components/shared/footer";
+
 import { Providers } from "./providers";
 
 import { fontSans } from "@/src/config/fonts";
@@ -41,6 +43,7 @@ export default function RootLayout({
       >
         <Providers themeProps={{ attribute: "class", defaultTheme: "light" }}>
           {children}
+          <Footer />
         </Providers>
       </body>
     </html>

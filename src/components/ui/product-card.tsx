@@ -75,47 +75,48 @@ const ProductCard = ({ product }: { product: Product }) => {
             src={product.images?.[0] || noImg}
             width="100%"
           />
-        </CardBody>
-        <div className="relative">
-          <div className="flex flex-col items-center w-full my-4">
-            <div>
-              <b>{product.name}</b>
-            </div>
-            <div className="font-bold text-green-700 text-lg">
-              $
-              {(
-                product.price -
-                product.price * (product.discount / 100)
-              ).toFixed(2)}
-              <div className="text-default-400 space-x-2 text-tiny">
-                <span className="line-through">
-                  ${product.price.toFixed(2)}
-                </span>
-                <span className="bg-red-600 px-1 text-white rounded">
-                  {product.discount}%
-                </span>
+
+          <div className="relative">
+            <div className="flex flex-col items-center w-full my-4 text-center">
+              <div>
+                <b>{product.name}</b>
+              </div>
+              <div className="font-bold text-green-700 text-lg">
+                $
+                {(
+                  product.price -
+                  product.price * (product.discount / 100)
+                ).toFixed(2)}
+                <div className="text-default-400 space-x-2 text-tiny">
+                  <span className="line-through">
+                    ${product.price.toFixed(2)}
+                  </span>
+                  <span className="bg-red-600 px-1 text-white rounded">
+                    {product.discount}%
+                  </span>
+                </div>
               </div>
             </div>
+            <div className="absolute inset-0 opacity-0 group-hover:opacity-100 group-hover:backdrop-blur-xl transition-all duration-300 flex flex-col items-center justify-center space-y-1">
+              <Button
+                isDisabled={cartLoading}
+                size="sm"
+                isLoading={isPending}
+                className="w-3/4"
+                onPress={handleAddToCart}
+              >
+                Add to Cart
+              </Button>
+              <Button
+                size="sm"
+                className="w-3/4 bg-default-800 text-default-100"
+                onPress={handleClick}
+              >
+                View Details
+              </Button>
+            </div>
           </div>
-          <div className="absolute inset-0 opacity-0 group-hover:opacity-100 group-hover:backdrop-blur-xl transition-all duration-300 flex flex-col items-center justify-center space-y-1">
-            <Button
-              isDisabled={cartLoading}
-              size="sm"
-              isLoading={isPending}
-              className="w-3/4"
-              onPress={handleAddToCart}
-            >
-              Add to Cart
-            </Button>
-            <Button
-              size="sm"
-              className="w-3/4 bg-default-800 text-default-100"
-              onPress={handleClick}
-            >
-              View Details
-            </Button>
-          </div>
-        </div>
+        </CardBody>
       </Card>
       <Modal
         backdrop="blur"

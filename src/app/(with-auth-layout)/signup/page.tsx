@@ -88,9 +88,9 @@ const SignUp = () => {
 
     if (res?.success) {
       if (selectedUser === "vendor") {
-        router.push("/vendor/add-product");
+        router.replace("/vendor/add-product");
       } else {
-        router.push("/");
+        router.replace("/");
       }
     }
     userLoading(true);
