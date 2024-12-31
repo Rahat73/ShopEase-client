@@ -47,15 +47,10 @@ const quickLinks2 = [
 ];
 
 export default function Footer() {
-  //   const handleSubscribe = (e: React.FormEvent) => {
-  //     e.preventDefault();
-  //     // Handle newsletter subscription
-  //   };
-
   return (
     <footer className="bg-gray-200 dark:bg-default-50 pt-16 pb-8">
       <div className="container max-w-7xl mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 mb-8">
           {/* Company Info */}
           <div className="space-y-4">
             <div className="flex items-center gap-2">
@@ -95,7 +90,7 @@ export default function Footer() {
           </div>
 
           {/* Quick Links */}
-          <div>
+          {/* <div>
             <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
             <div className="flex space-x-10">
               <ul className="space-y-2">
@@ -123,7 +118,7 @@ export default function Footer() {
                 ))}
               </ul>
             </div>
-          </div>
+          </div> */}
 
           {/* Contact Info */}
           <div>

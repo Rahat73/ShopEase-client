@@ -89,17 +89,18 @@ export default function ShopInfoCard({ shop }: { shop: ShopInfo }) {
             <FaBagShopping size={14} className="mr-1" />
             <span>{shop._count.product} Products</span>
           </div>
-          <Button
-            size="sm"
-            className="mt-2 bg-default-800 text-default-100 group"
-            onPress={() => router.push(`/shop/${shop.id}`)}
+          <button
+            // size="sm"
+            // variant="light"
+            className="mt-2 group underline underline-offset-4 text-tiny flex items-center"
+            onClick={() => router.push(`/shop/${shop.id}`)}
           >
             View Shop
             <FaArrowRight
               size={12}
               className="ml-1 group-hover:translate-x-1 transition-transform"
             />
-          </Button>
+          </button>
         </div>
       </div>
     </div>

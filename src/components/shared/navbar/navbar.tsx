@@ -15,6 +15,7 @@ import { Tooltip } from "@nextui-org/react";
 
 import AuthBtn from "./auth-btn";
 import SearchBar from "./search-bar";
+import { NavbarExtension } from "./navbar-extension";
 
 import logo from "@/src/assets/images/logo.png";
 import { ThemeSwitch } from "@/src/components/theme-switch";
@@ -25,8 +26,8 @@ export const Navbar = async () => {
   const user = await getCurrentUser();
 
   return (
-    <>
-      <NextUINavbar maxWidth="xl" position="sticky" className="py-3">
+    <div className="sticky top-0 z-40">
+      <NextUINavbar maxWidth="xl" position="sticky" className="pt-3 z-50">
         <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
           <NavbarBrand as="li" className="gap-3 max-w-fit">
             <NextLink
@@ -116,7 +117,7 @@ export const Navbar = async () => {
               ))}
             </>
           )}
-          {siteConfig.navItemsCommon?.map((item) => (
+          {/* {siteConfig.navItemsCommon?.map((item) => (
             <NavbarItem key={item.href}>
               <Tooltip content={item.label} showArrow={true}>
                 <NextLink
@@ -134,7 +135,7 @@ export const Navbar = async () => {
                 </NextLink>
               </Tooltip>
             </NavbarItem>
-          ))}
+          ))} */}
 
           <ThemeSwitch />
           <NavbarItem>
@@ -151,7 +152,7 @@ export const Navbar = async () => {
           <NavbarMenuToggle />
         </NavbarContent>
 
-        <NavbarMenu>
+        <NavbarMenu className="z-50">
           <div className="mx-4 mt-2 flex flex-col gap-2">
             {user?.role === "CUSTOMER" && (
               <>
@@ -236,9 +237,12 @@ export const Navbar = async () => {
           </div>
         </NavbarMenu>
       </NextUINavbar>
-      <div className="md:hidden w-10/12 mx-auto pb-3 sticky top-0">
-        <SearchBar />
+      <div className="md:hidden pb-3 sticky top-0 bg-background z-10">
+        <div className="w-10/12 mx-auto ">
+          <SearchBar />
+        </div>
       </div>
-    </>
+      <NavbarExtension />
+    </div>
   );
 };

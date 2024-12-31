@@ -15,28 +15,28 @@ export default async function Home() {
   return (
     <div>
       <ScrollToTopBtn />
-      <div className="mb-10">
+      <div className="mb-20">
         <BannerSection />
       </div>
-      <div className="mb-10">
+      <div className="mb-20">
         <FlashSellSection />
       </div>
-      <div className="mb-10">
+      <div className="mb-20">
         <CategoriesSection />
       </div>
-      <div className="mb-10">
+      <div className="mb-20">
         <VendorsSection />
       </div>
       {user?.role === "CUSTOMER" ? (
-        <div className="mb-10">
+        <div className="mb-20">
           <JustForYou />
         </div>
       ) : (
-        <div className="mb-10">
+        <div className="mb-20">
           <ProductsSection />
         </div>
       )}
-      <div className="mb-10">
+      <div className="mb-20">
         <ServiceSection />
       </div>
     </div>

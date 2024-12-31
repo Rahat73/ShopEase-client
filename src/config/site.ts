@@ -1,10 +1,13 @@
 import {
+  MdBolt,
   MdDashboard,
   MdOutlineCompare,
   MdOutlineHistory,
   MdPerson,
   MdPreview,
+  MdShoppingBag,
   MdShoppingCart,
+  MdStore,
 } from "react-icons/md";
 export type SiteConfig = typeof siteConfig;
 
@@ -48,6 +51,21 @@ export const siteConfig = {
     },
   ],
   navItemsCommon: [
+    {
+      label: "Products",
+      icon: MdShoppingBag,
+      href: "/products",
+    },
+    {
+      label: "Flash Sell",
+      icon: MdBolt,
+      href: "/flash-sell",
+    },
+    {
+      label: "Shops",
+      icon: MdStore,
+      href: "/shop",
+    },
     {
       label: "Compare",
       icon: MdOutlineCompare,
