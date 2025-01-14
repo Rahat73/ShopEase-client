@@ -3,16 +3,13 @@
 import Autoplay from "embla-carousel-autoplay";
 import useEmblaCarousel from "embla-carousel-react";
 import { useCallback } from "react";
-import Image from "next/image";
 import {
   IoIosArrowDropleftCircle,
   IoIosArrowDroprightCircle,
 } from "react-icons/io";
 
-import banner1 from "@/src/assets/images/banner1.jpg";
-import banner2 from "@/src/assets/images/banner2.jpg";
-import banner3 from "@/src/assets/images/banner3.jpg";
-import banner4 from "@/src/assets/images/banner4.jpg";
+import FirstBanner from "./first-banner";
+import Secondbanner from "./second-banner";
 
 const BannerSection = () => {
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true }, [Autoplay()]);
@@ -30,9 +27,12 @@ const BannerSection = () => {
       <div ref={emblaRef}>
         <div className="flex">
           <div style={{ flex: "0 0 100%", minWidth: 0 }}>
-            <Image src={banner1} alt="banner1" />
+            <FirstBanner />
           </div>
           <div style={{ flex: "0 0 100%", minWidth: 0 }}>
+            <Secondbanner />
+          </div>
+          {/* <div style={{ flex: "0 0 100%", minWidth: 0 }}>
             <Image src={banner2} alt="banner2" />
           </div>
           <div style={{ flex: "0 0 100%", minWidth: 0 }}>
@@ -40,7 +40,7 @@ const BannerSection = () => {
           </div>
           <div style={{ flex: "0 0 100%", minWidth: 0 }}>
             <Image src={banner4} alt="banner4" />
-          </div>
+          </div> */}
         </div>
       </div>
       <div className="absolute bottom-4 right-4">

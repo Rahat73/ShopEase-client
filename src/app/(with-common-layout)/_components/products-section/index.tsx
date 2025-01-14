@@ -56,7 +56,7 @@ const ProductsSection = () => {
   };
 
   return (
-    <div className="p-5 bg-default-100 rounded-lg shadow-lg">
+    <div className="p-5 px-12 bg-default-100">
       <div className="flex items-center justify-between">
         <p className="text-2xl font-bold ">Products</p>
         <Link href="/products">

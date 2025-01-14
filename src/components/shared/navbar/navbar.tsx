@@ -27,7 +27,11 @@ export const Navbar = async () => {
 
   return (
     <div className="sticky top-0 z-40">
-      <NextUINavbar maxWidth="xl" position="sticky" className="pt-3 z-50">
+      <NextUINavbar
+        maxWidth="full"
+        position="sticky"
+        className="pt-3 px-7 z-50"
+      >
         <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
           <NavbarBrand as="li" className="gap-3 max-w-fit">
             <NextLink

@@ -29,7 +29,7 @@ const features = [
 ];
 const ServiceSection = () => {
   return (
-    <div className="bg-default-100 my-4 p-8 rounded-lg">
+    <div className="bg-default-100 my-4 p-8">
       <div className="text-center mb-12">
         <motion.h2
           initial={{ opacity: 0, y: 20 }}

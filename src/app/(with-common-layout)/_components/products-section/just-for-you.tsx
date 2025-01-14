@@ -55,7 +55,7 @@ const JustForYou = () => {
   };
 
   return (
-    <div className="p-5 bg-default-100 rounded-lg shadow-lg min-h-[50vh]">
+    <div className="p-5 px-12 bg-default-100 min-h-[50vh]">
       <div className="flex items-center justify-between">
         <p className="text-2xl font-bold ">Just For You</p>
         <Link href="/products">

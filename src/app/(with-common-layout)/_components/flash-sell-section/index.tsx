@@ -21,19 +21,19 @@ const FlashSellSection = () => {
 
   return (
     <div
-      className="p-5 bg-default-100 rounded-lg shadow-lg grid grid-cols-12 dark:bg-blend-overlay bg-[15%_center] md:bg-[0%_center]"
+      className="p-7 bg-default-100 grid grid-cols-12 bg-blend-overlay bg-[15%_center] md:bg-[0%_center]"
       style={{
         backgroundImage: "url('/images/flash-sell-banner.jpg')",
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover",
         backgroundAttachment: "fixed",
-        backgroundColor: "rgba(0, 0, 0, 0.6)",
+        backgroundColor: "rgba(0, 0, 0, 0.4)",
       }}
     >
       <div className="hidden lg:col-span-5 lg:flex flex-col items-center justify-center">
         <div className="w-11/12 mx-auto">
           <div className="flex items-center justify-between backdrop-blur-xl p-5 rounded-lg">
-            <p className="text-2xl font-bold animate-pulse">
+            <p className="text-2xl font-bold animate-pulse text-white">
               Hurry Up! <br /> Flash Sell⚡
             </p>
 
@@ -50,11 +50,11 @@ const FlashSellSection = () => {
           </div>
           <Divider className="my-4" />
         </div>
-        <CountdownTimer endDate={"2024-12-31T23:59:59"} />
+        <CountdownTimer endDate={"2025-01-31T23:59:59"} />
       </div>
       <div className="col-span-12 md:col-span-12 lg:col-span-7">
         <div className=" lg:hidden flex items-center justify-between backdrop-blur-xl p-1 rounded-lg">
-          <p className="text-2xl font-bold animate-pulse">
+          <p className="text-2xl font-bold animate-pulse text-white">
             Hurry Up! Flash Sell⚡
           </p>
 
@@ -71,9 +71,9 @@ const FlashSellSection = () => {
         </div>
         <Divider className="my-4 lg:hidden" />
         <div className="my-4 lg:hidden">
-          <CountdownTimer endDate={"2024-12-31T23:59:59"} />
+          <CountdownTimer endDate={"2025-01-31T23:59:59"} />
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-3 pr-5">
           {isLoading ? (
             <>
               {Array.from({ length: 6 }).map((_, index) => (

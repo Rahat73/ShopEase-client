@@ -8,9 +8,7 @@ export default function CommonLayout({
   return (
     <div className="relative flex flex-col min-h-screen">
       <Navbar />
-      <main className="relative container mx-auto max-w-7xl px-6 flex-grow">
-        {children}
-      </main>
+      <main className="relative container mx-auto flex-grow">{children}</main>
     </div>
   );
 }

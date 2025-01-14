@@ -43,7 +43,7 @@ export default function CountdownTimer({ endDate }: CountdownTimerProps) {
   }, [endDate]);
 
   return (
-    <div className="w-full max-w-md mx-auto p-4 backdrop-blur-xl rounded-lg">
+    <div className="w-full max-w-md mx-auto p-4 backdrop-blur-xl rounded-lg text-white">
       <div className="flex items-center gap-2 mb-4">
         <FaClock className="w-5 h-5 text-green-500" />
         <h2 className="text-xl font-medium">Sales Ends in</h2>

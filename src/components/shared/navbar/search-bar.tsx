@@ -64,7 +64,7 @@ const SearchBar = () => {
             <Button
               size="sm"
               variant="solid"
-              color="success"
+              className="bg-default-900 text-default-50"
               onPress={() => router.push(`/products?searchTerm=${searchTerm}`)}
             >
               <SearchIcon className="text-base text-default-400 pointer-events-none flex-shrink-0" />{" "}

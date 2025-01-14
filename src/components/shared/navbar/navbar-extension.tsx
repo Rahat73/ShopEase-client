@@ -31,8 +31,8 @@ export function NavbarExtension() {
   return (
     <Navbar
       shouldHideOnScroll={hide}
-      maxWidth="xl"
-      className="bg-default-50 top-0 sticky z-40 hidden sm:flex"
+      maxWidth="full"
+      className="px-7 bg-default-50 top-0 sticky z-40 hidden sm:flex"
       onScrollPositionChange={handleHideNavbar}
     >
       <NavbarContent className="gap-4">
