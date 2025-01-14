@@ -48,8 +48,8 @@ const quickLinks2 = [
 
 export default function Footer() {
   return (
-    <footer className="bg-gray-200 dark:bg-default-50 pt-16 pb-8">
-      <div className="container max-w-7xl mx-auto px-4">
+    <footer className="bg-gray-200 dark:bg-default-50 py-8 mt-8">
+      <div className="container px-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 mb-8">
           {/* Company Info */}
           <div className="space-y-4">

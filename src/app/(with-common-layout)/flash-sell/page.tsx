@@ -17,7 +17,7 @@ const FlashSellPage = () => {
   });
 
   return (
-    <div className="p-5 bg-default-100 rounded-lg shadow-lg min-h-[85vh]">
+    <div className="p-5 px-12 bg-default-50 min-h-[85vh]">
       <p className="text-center text-2xl font-bold ">Flash Sell Products</p>
 
       <Divider className="my-4" />

@@ -66,7 +66,7 @@ const AllProducts = () => {
 
   return (
     <>
-      <div className="py-5">
+      <div className="py-5 mx-12">
         <div className="text-xl font-bold space-x-4 flex justify-start items-center">
           <p>All Products</p>
           {categoryName && (

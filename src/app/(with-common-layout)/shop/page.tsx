@@ -12,7 +12,7 @@ const ShopsPage = () => {
   const { data = [], isLoading } = useFetchData(GET_VENDORS_DETAILED_INFO);
 
   return (
-    <div className="py-5">
+    <div className="py-5 px-12 bg-default-50">
       <div className="text-xl font-bold space-x-4 flex justify-between items-center">
         <p>Shops</p>
       </div>
