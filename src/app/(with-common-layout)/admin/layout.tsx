@@ -48,8 +48,8 @@ const AdminLayout = ({ children }: { children: ReactNode }) => {
   ];
 
   return (
-    <div className="flex h-[85vh]">
-      <aside className="hidden md:block w-64   bg-default-200 ">
+    <div className="flex">
+      <aside className="hidden md:block w-64 h-[85vh] bg-default-200 ">
         <p className="text-center text-2xl font-bold my-4">Admin Panel</p>
         <Divider className="my-4" />
         <nav className="mt-4 space-y-2">
@@ -95,7 +95,9 @@ const AdminLayout = ({ children }: { children: ReactNode }) => {
           </button>
         </header>
 
-        <main className="p-4 overflow-auto relative">{children}</main>
+        <main className="p-4 overflow-auto relative min-h-[50vh]">
+          {children}
+        </main>
       </div>
     </div>
   );

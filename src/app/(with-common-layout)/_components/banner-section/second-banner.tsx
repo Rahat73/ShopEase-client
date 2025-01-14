@@ -1,6 +1,6 @@
 import { Button } from "@nextui-org/button";
 import { motion } from "framer-motion";
-import { FaArrowRight, FaStore } from "react-icons/fa6";
+import { FaArrowRight } from "react-icons/fa6";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -21,12 +21,12 @@ const Secondbanner = () => {
             }}
             className="text-center md:text-right order-2 md:order-1"
           >
-            <div className="flex items-center justify-center md:justify-end gap-2 mb-4">
+            {/* <div className="flex items-center justify-center md:justify-end gap-2 mb-4">
               <FaStore className="w-5 h-5 text-emerald-600" />
               <span className="text-sm font-medium text-emerald-600">
                 Featured Shops
               </span>
-            </div>
+            </div> */}
 
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-emerald-600 to-teal-600">
               Discover Shops with Amazing Deals
