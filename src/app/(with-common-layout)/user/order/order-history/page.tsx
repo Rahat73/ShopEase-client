@@ -146,7 +146,7 @@ const OrderHistoryPage = () => {
   }, [meta]);
 
   return (
-    <div className="py-5">
+    <div className="py-5 mx-12">
       <div className="text-xl font-bold space-x-4 flex justify-between items-center">
         <p>Order History</p>
       </div>
